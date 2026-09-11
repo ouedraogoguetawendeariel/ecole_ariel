@@ -1,0 +1,47 @@
+.localisation {
+    padding: 24px 60px 80px;
+    box-sizing: border-box;
+    background-color: wheat;
+    font-family: 'roboto';
+}
+
+.localisation h1 {
+    margin-bottom: 12px;
+}
+
+.localisation p {
+    max-width: 500px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.itineraire-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 5px;
+    background-color: #E4A339;
+    color: #15324B;
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 30px;
+}
+
+.itineraire-btn:hover {
+    background-color: green;
+}
+
+.carte-wrapper {
+    width: 100%;
+    height: 450px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .localisation {
+        padding: 20px 24px 60px;
+    }
+    .carte-wrapper {
+        height: 280px;
+    }
+}

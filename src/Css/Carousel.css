@@ -1,0 +1,117 @@
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    aspect-ratio: 19 / 9;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: 40px auto;
+    height: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s ease;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.carousel-fleche {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(21, 50, 75, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.carousel-fleche-gauche {
+    left: 12px;
+}
+
+.carousel-fleche-droite {
+    right: 12px;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    padding: 0;
+}
+
+.carousel-dot-active {
+    background: #E4A339;
+}
+
+
+.carousel-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+    padding: 20px;
+    background: linear-gradient(to bottom, rgba(15, 36, 54, 0.35), rgba(15, 36, 54, 0.55));
+}
+
+.carousel-annee {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    font-family: 'Arial', sans-serif;
+}
+
+.carousel-inscription {
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    font-family: 'Arial', sans-serif;
+}
+
+@media (max-width: 768px) {
+    .carousel {
+        aspect-ratio: 16 / 9;
+        border-radius: 6px;
+    }
+    .carousel-annee {
+        font-size: 1.1rem;
+    }
+    .carousel-inscription {
+        font-size: 0.9rem;
+    }
+    .carousel-fleche {
+        width: 32px;
+        height: 32px;
+    }
+}

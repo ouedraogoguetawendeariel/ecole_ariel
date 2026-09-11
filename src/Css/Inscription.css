@@ -1,0 +1,98 @@
+.inscription {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: wheat;
+    padding: 40px 20px;
+}
+
+.inscription-box {
+    width: 420px;
+    padding: 40px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.inscription-box h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.inscription-box > p {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.type-inscription {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.type-inscription button {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #15324B;
+    border-radius: 6px;
+    background-color: white;
+    color: #15324B;
+    cursor: pointer;
+}
+
+.type-inscription button.active {
+    background-color: #15324B;
+    color: white;
+}
+
+.inscription-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.inscription-box label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.inscription-box input {
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.inscription-box form > button {
+    padding: 13px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: #15324B;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.retour-connexion {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.retour-connexion button {
+    background: none;
+    border: none;
+    color: #15324B;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .inscription {
+        padding: 20px;
+    }
+    .inscription-box {
+        padding: 24px;
+        width: 100%;
+    }
+}

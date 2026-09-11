@@ -1,0 +1,401 @@
+/* =========================
+   PAGE ACTUALITÉS
+========================= */
+
+.actualites-page {
+    min-height: 100vh;
+    background: wheat;
+    color: #15324B;
+    font-family: 'roboto';
+}
+
+/* =========================
+   EN-TÊTE
+========================= */
+
+.actualites-hero {
+    background: #176b5b;
+    color: white;
+    padding: 70px 20px;
+    text-align: center;
+}
+
+.actualites-hero div {
+    max-width: 850px;
+    margin: auto;
+}
+
+.actualites-hero span {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.actualites-hero h1 {
+    font-size: 48px;
+    margin: 20px 0 15px;
+}
+
+.actualites-hero p {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.actualites-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-heading h2 {
+    color: #15324B;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.section-heading p {
+    color: #555;
+    font-size: 16px;
+}
+
+/* =========================
+   CARTES
+========================= */
+
+.actualite-card {
+    background: #a7a296;
+    border-radius: 18px;
+    margin-bottom: 35px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: 0.3s ease;
+}
+
+.actualite-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.actualite-content {
+    padding-bottom: 20px;
+}
+
+.actualite-tag {
+    display: inline-block;
+    color: #15324B;
+    background: #f1ead7;
+    padding: 6px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.actualite-content h3 {
+    color: #15324B;
+    font-size: 28px;
+    margin: 15px 0 10px;
+}
+
+.actualite-content p {
+    color: #555;
+    line-height: 1.7;
+    font-size: 16px;
+    margin: 0;
+}
+
+/* =========================
+   GALERIE
+========================= */
+
+.college-gallery {
+    width: 100%;
+}
+
+.photo-principale {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    height: 450px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #eee;
+}
+
+.photo-principale img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.photo-cliquable {
+    cursor: zoom-in;
+}
+
+/* =========================
+   BOUTONS GALERIE
+========================= */
+
+.gallery-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(21, 50, 75, 0.8);
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.gallery-btn:hover {
+    background: #15324B;
+}
+
+.gallery-prev {
+    left: 15px;
+}
+
+.gallery-next {
+    right: 15px;
+}
+
+/* =========================
+   COMPTEUR
+========================= */
+
+.photo-compteur {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(21, 50, 75, 0.85);
+    color: white;
+    padding: 7px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+/* =========================
+   MINIATURES
+========================= */
+
+.photo-miniatures {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    overflow-x: auto;
+    padding: 5px 0;
+}
+
+.miniature {
+    flex: 0 0 90px;
+    width: 90px;
+    height: 65px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    background: none;
+}
+
+.miniature img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.miniature:hover {
+    border-color: #15324B;
+}
+
+.miniature.active {
+    border: 3px solid #d4a72c;
+}
+
+/* =========================
+   AUCUNE PHOTO
+========================= */
+
+.aucune-photo {
+    min-height: 180px;
+    background: #f5f0e3;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+    color: #15324B;
+}
+
+.aucune-photo p {
+    font-size: 15px;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* =========================
+   DATE
+========================= */
+
+.actualite-date {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    color: #15324B;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* =========================
+   PHOTO PLEIN ÉCRAN
+========================= */
+
+.photo-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-lightbox img {
+    max-width: 85%;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.lightbox-fermer,
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    border: none;
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-fermer {
+    top: 25px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    font-size: 32px;
+}
+
+.lightbox-prev,
+.lightbox-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 55px;
+    height: 55px;
+    font-size: 42px;
+}
+
+.lightbox-prev {
+    left: 30px;
+}
+
+.lightbox-next {
+    right: 30px;
+}
+
+.lightbox-fermer:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.lightbox-compteur {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px 18px;
+    border-radius: 20px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .actualites-hero {
+        padding: 55px 20px;
+    }
+
+    .actualites-hero h1 {
+        font-size: 38px;
+    }
+
+    .actualites-section {
+        padding: 40px 15px;
+    }
+
+    .actualite-card {
+        padding: 20px;
+    }
+
+    .actualite-content h3 {
+        font-size: 24px;
+    }
+
+    .photo-principale {
+        height: 300px;
+    }
+
+    .gallery-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 30px;
+    }
+
+    .lightbox-prev {
+        left: 10px;
+    }
+
+    .lightbox-next {
+        right: 10px;
+    }
+
+    .photo-lightbox img {
+        max-width: 90%;
+        max-height: 75vh;
+    }
+}

@@ -1,0 +1,105 @@
+.admin-eleves {
+    min-height: 100vh;
+    background: #f4f6f8;
+}
+
+.admin-eleves-header {
+    background: #15324B;
+    color: white;
+    padding: 25px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-eleves-header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+.admin-eleves-header p {
+    margin: 8px 0 0;
+}
+
+.admin-eleves-header button {
+    background: white;
+    color: #15324B;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.admin-eleves-content {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.eleves-resume {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 10px rgba(0,0,0,.08);
+}
+
+.eleves-resume strong {
+    font-size: 30px;
+    color: #15324B;
+    margin-right: 10px;
+}
+
+.table-container {
+    background: white;
+    border-radius: 12px;
+    overflow-x: auto;
+    box-shadow: 0 3px 10px rgba(0,0,0,.08);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background: #15324B;
+    color: white;
+}
+
+tr:hover {
+    background: #f8fafc;
+}
+
+.message-erreur,
+.aucun-eleve {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.message-erreur {
+    color: #b42318;
+}
+
+@media (max-width: 700px) {
+    .admin-eleves-header {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .admin-eleves-content {
+        margin-top: 25px;
+    }
+}

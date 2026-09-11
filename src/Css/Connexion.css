@@ -1,0 +1,116 @@
+.connexion {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: wheat;
+}
+
+.connexion-box {
+    width: 400px;
+    padding: 40px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.connexion-box h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.connexion-box p {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.type-connexion {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.type-connexion button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.connexion-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.connexion-box label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.connexion-box input {
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Bouton principal : Se connecter */
+.connexion-box form button[type="submit"] {
+    padding: 13px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #15324B;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.connexion-box form button[type="submit"]:hover {
+    background-color: #0e2234;
+}
+
+.inscription-link {
+    margin-top: 20px;
+    margin-bottom: 10px !important;
+    text-align: center;
+}
+
+/* Bouton secondaire : S'inscrire (style contour/outline) */
+.btn-inscription {
+    padding: 10px 20px;
+    border: 2px solid #15324B;
+    background-color: transparent;
+    color: #15324B;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    align-self: center;
+    width: 100%;
+}
+
+.btn-inscription:hover {
+    background-color: #15324B;
+    color: white;
+}
+
+.erreur-connexion {
+    color: #d32f2f;
+    text-align: center;
+    margin-bottom: 15px !important;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .connexion {
+        padding: 20px;
+    }
+    .connexion-box {
+        padding: 24px;
+        width: 100%;
+    }
+}

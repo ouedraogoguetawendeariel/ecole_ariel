@@ -1,0 +1,40 @@
+@import './Css/Accueil.css';
+@import './Css/Contacter.css';
+@import './Css/Formations.css';
+@import './Css/Situation.css';
+@import './Css/Menu.css';
+@import './Css/footer.css';
+@import './Css/stats.css';
+@import './Css/actualites.css';
+@import './Css/Utilisateur.css';
+@import './Css/Connexion.css';
+@import './Css/Inscription.css';
+@import './Css/Carousel.css';
+@import './Css/TableauDeBord.css';
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: wheat;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.page-content {
+    flex: 1;
+}
+
+.accueil,
+.formations,
+.localisation,
+.contacter,
+.actualites,
+.espace-parents {
+    background-color: wheat;
+    color: #15324B;
+    font-family: 'roboto';
+}

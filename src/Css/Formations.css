@@ -1,0 +1,487 @@
+/* ================================
+   PAGE FORMATIONS
+================================ */
+.formations-page {
+    min-height: 100vh;
+    background: wheat;
+    color: #15324B;
+    padding-bottom: 60px;
+    font-family: 'roboto';
+}
+
+/* ================================
+   HERO
+================================ */
+
+.formations-hero {
+    background: linear-gradient(135deg, #176b5b, #0f4f43);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 900px;
+    margin: auto;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.formations-hero h1 {
+    font-size: 52px;
+    margin: 0 0 15px;
+}
+
+.formations-hero p {
+    max-width: 650px;
+    margin: auto;
+    font-size: 18px;
+    line-height: 1.7;
+    opacity: 0.95;
+}
+
+/* ================================
+   INTRODUCTION
+================================ */
+
+.formations-intro {
+    max-width: 850px;
+    margin: 60px auto 35px;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.formations-intro h2 {
+    color: #176b5b;
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.formations-intro p {
+    color: #64748b;
+    line-height: 1.7;
+    font-size: 17px;
+}
+
+/* ================================
+   CARTES ÉTABLISSEMENTS
+================================ */
+
+.etablissements {
+    max-width: 1100px;
+    margin: 40px auto 70px;
+    padding: 0 20px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.formation-card {
+    background: #a7a296;
+    border-radius: 20px;
+    padding: 35px;
+    border: 1px solid #e1ebe7;
+    box-shadow: 0 8px 25px rgba(23, 107, 91, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.formation-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(23, 107, 91, 0.15);
+}
+
+.formation-icon {
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e8f5f1;
+    border-radius: 18px;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.formation-card h2 {
+    color: #176b5b;
+    font-size: 27px;
+    margin: 0 0 12px;
+}
+
+.formation-description {
+    color: #64748b;
+    line-height: 1.7;
+    min-height: 75px;
+}
+
+/* ================================
+   CLASSES
+================================ */
+
+.classes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+.classes span {
+    background: #f1f8f5;
+    color: #176b5b;
+    border: 1px solid #cde5dd;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* ================================
+   PRIX
+================================ */
+
+.prix {
+    background: #fff9e8;
+    border-left: 4px solid #d4a72c;
+    padding: 15px 18px;
+    margin: 25px 0;
+    border-radius: 8px;
+}
+
+.prix small {
+    display: block;
+    color: #80691f;
+    margin-bottom: 5px;
+}
+
+.prix strong {
+    color: #b48713;
+    font-size: 25px;
+}
+
+/* ================================
+   BOUTONS
+================================ */
+
+.formation-card button {
+    width: 100%;
+    border: none;
+    background: #176b5b;
+    color: white;
+    padding: 13px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.formation-card button:hover {
+    background: #0f4f43;
+}
+
+/* ================================
+   SECTIONS
+================================ */
+
+.modalites,
+.frais-annexes,
+.dossier,
+.echeances {
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    padding: 35px;
+    background: #a7a296;
+    border-radius: 20px;
+    border: 1px solid #e1ebe7;
+    box-shadow: 0 8px 25px rgba(23, 107, 91, 0.06);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.section-title > span {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8f5f1;
+    border-radius: 15px;
+    font-size: 27px;
+}
+
+.section-title h2 {
+    color: #176b5b;
+    margin: 0 0 5px;
+    font-size: 28px;
+}
+
+.section-title p {
+    margin: 0;
+    color: #64748b;
+}
+
+/* ================================
+   PAIEMENTS
+================================ */
+
+.paiement-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.paiement-card {
+    background: #f7faf9;
+    border: 1px solid #dceae5;
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.paiement-card h3 {
+    color: #176b5b;
+    margin-top: 0;
+}
+
+.paiement-card > p strong {
+    color: #b48713;
+    font-size: 23px;
+}
+
+.paiement-card ul {
+    padding-left: 20px;
+    line-height: 2;
+    color: #52606d;
+}
+
+/* ================================
+   ÉCHÉANCES
+================================ */
+
+.echeances {
+    background: #176b5b;
+    color: white;
+}
+
+.echeances h2 {
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.echeances-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.echeances-grid div {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.echeances-grid strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.echeances-grid span {
+    color: #f5d879;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ================================
+   TABLEAU FRAIS
+================================ */
+
+.frais-table {
+    border: 1px solid #dceae5;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.frais-row {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e7efec;
+}
+
+.frais-row:last-child {
+    border-bottom: none;
+}
+
+.frais-header {
+    background: #176b5b;
+    color: white;
+    font-weight: bold;
+}
+
+.frais-row strong {
+    color: #b48713;
+}
+
+/* ================================
+   DOSSIER
+================================ */
+
+.dossier-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.dossier-content h3 {
+    color: #176b5b;
+}
+
+.dossier-content ul {
+    line-height: 2;
+    padding-left: 25px;
+    color: #52606d;
+}
+
+.dossier-note {
+    background: #fff9e8;
+    border-left: 4px solid #d4a72c;
+    padding: 25px;
+    border-radius: 10px;
+    align-self: start;
+}
+
+.dossier-note strong {
+    color: #b48713;
+    font-size: 20px;
+}
+
+.dossier-note p {
+    color: #665a32;
+    line-height: 1.6;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 800px) {
+
+    .formations-hero {
+        padding: 60px 20px;
+    }
+
+    .formations-hero h1 {
+        font-size: 40px;
+    }
+
+    .etablissements,
+    .paiement-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modalites,
+    .frais-annexes,
+    .dossier,
+    .echeances {
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 25px;
+    }
+
+    .echeances-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dossier-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .formations-hero h1 {
+        font-size: 34px;
+    }
+
+    .formation-card {
+        padding: 25px;
+    }
+
+    .section-title {
+        align-items: flex-start;
+    }
+
+    .frais-row {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+}
+
+/* ================================
+   DÉTAILS DES FORMATIONS
+================================ */
+
+.details-formation {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f1f8f5;
+    border-left: 4px solid #d4a72c;
+    border-radius: 10px;
+    animation: apparition 0.3s ease;
+}
+
+.details-formation h3 {
+    color: #176b5b;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.details-formation p {
+    margin: 8px 0;
+    color: #52606d;
+    line-height: 1.5;
+}
+
+.details-formation strong {
+    color: #176b5b;
+}
+
+@keyframes apparition {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .formations {
+        padding: 20px 24px 60px;
+    }
+    .formations-liste {
+        flex-direction: column;
+    }
+}

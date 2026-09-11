@@ -1,0 +1,201 @@
+.contacter {
+    padding: 24px 60px 80px;
+    box-sizing: border-box;
+    font-family: 'roboto';
+}
+
+.contact-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 70px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.contact-infos {
+    flex: 1;
+    min-width: 280px;
+}
+
+.contact-infos h1 {
+    margin-bottom: 12px;
+}
+
+.contact-infos > p {
+    max-width: 440px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.contact-bloc {
+    margin-bottom: 30px;
+    padding-bottom: 26px;
+    border-bottom: 1px solid rgba(21, 50, 75, 0.15);
+}
+
+.contact-bloc:last-child {
+    border-bottom: none;
+    background-color:  #176b5b;
+    color: white;
+    padding: 22px 24px;
+    border-radius: 10px;
+}
+
+.contact-bloc:last-child .horaires-titre,
+.contact-bloc:last-child .horaires-ligne span:first-child {
+    color: white;
+}
+
+.contact-bloc:last-child .horaires-ligne span:last-child {
+    color: #E4A339;
+}
+
+.contact-bloc:last-child .horaires-ligne {
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.contact-ligne {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    color: #15324B;
+}
+
+.contact-ligne:last-child {
+    margin-bottom: 0;
+}
+
+.horaires-titre {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    color: #0a78d8;
+    margin-bottom: 14px;
+}
+
+.horaires-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 260px;
+}
+
+.horaires-ligne {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    padding-bottom: 6px;
+    border-bottom: 1px dashed rgba(21, 50, 75, 0.2);
+}
+
+.horaires-ligne span:first-child {
+    font-weight: 600;
+}
+
+.horaires-ligne span:last-child {
+    color: #6E8F6B;
+}
+
+.contact-form {
+    flex: 1;
+    min-width: 300px;
+    background-color: #a7a296;
+    border: 1px solid rgba(21, 50, 75, 0.15);
+    border-radius: 10px;
+    padding: 36px;
+    box-sizing: border-box;
+    align-self: flex-start;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.contact-form label {
+    font-weight: 600;
+    margin-top: 14px;
+    color: #15324B;
+    font-size: 0.9rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 12px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(21, 50, 75, 0.25);
+    font-family: inherit;
+    font-size: 0.95rem;
+    resize: none;
+    box-sizing: border-box;
+    width: 100%;
+    transition: border-color 0.15s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #E4A339;
+}
+
+.contact-form button {
+    margin-top: 24px;
+    padding: 13px 28px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background-color: #E4A339;
+    color: #15324B;
+    font-weight: bold;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    align-self: flex-start;
+    transition: transform 0.15s ease;
+}
+
+.contact-form button:hover {
+    transform: translateY(-1px);
+}
+
+.confirmation {
+    color: #15324B;
+    line-height: 1.6;
+}
+
+.confirmation p {
+    margin: 0 0 8px;
+}
+
+@media (max-width: 768px) {
+    .contacter {
+        padding: 20px 24px 60px;
+    }
+    .contact-wrapper {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .contact-form {
+        padding: 24px;
+    }
+}
+
+.whatsapp-ligne {
+    margin-top: 18px;
+}
+
+.whatsapp-ligne a {
+    text-decoration: none;
+    color: #176b5b;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.whatsapp-ligne a:hover {
+    text-decoration: underline;
+}

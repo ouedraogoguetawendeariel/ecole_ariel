@@ -1,0 +1,47 @@
+.accueil {
+    margin: 0;
+    padding: 24px 60px 80px;
+    text-align: left;
+    background-color: wheat;
+    color: #15324B;
+    font-family: 'roboto';
+}
+
+#inscription {
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: block;
+    margin: 0 0 24px;
+}
+
+.buton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+}
+
+.buton button {
+    padding: 12px 25px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.accueil h1 {
+    text-align: center;
+    color: black;
+}
+
+@media (max-width: 768px) {
+    .accueil {
+        padding: 20px 24px 60px;
+    }
+    .buton {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .buton button {
+        width: 100%;
+    }
+}

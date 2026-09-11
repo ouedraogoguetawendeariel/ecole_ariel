@@ -1,0 +1,51 @@
+.utilisateur {
+    min-height: 100vh;
+    padding: 60px;
+    text-align: center;
+    background-color: wheat;
+    font-family: 'roboto';
+}
+
+.user-header {
+    margin-bottom: 50px;
+}
+
+.user-header h1 {
+    margin: 15px 0 10px;
+}
+
+.user-choice {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.user-card {
+    width: 300px;
+    padding: 30px;
+    background-color: #a7a296;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.user-card h2 {
+    margin: 15px 0;
+}
+
+.user-card p {
+    line-height: 1.6;
+}
+
+.user-card button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .user-choice {
+        flex-direction: column;
+    }
+}
