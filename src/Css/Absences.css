@@ -1,0 +1,406 @@
+.absences-page {
+  min-height: 100vh;
+  background: wheat;
+  color: #1f2937;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.absences-header {
+  background: #15324b;
+  color: white;
+  padding: 25px 40px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
+}
+
+.absences-header h1 {
+  margin: 0 0 8px;
+  font-size: 30px;
+}
+
+.absences-header p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 16px;
+}
+
+.absences-header button {
+  border: none;
+  background: white;
+  color: #15324b;
+
+  padding: 11px 20px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.absences-header button:hover {
+  background: #eef3f7;
+}
+
+/* ==========================================
+   CONTENU
+========================================== */
+
+.absences-content {
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  padding: 30px;
+}
+
+/* ==========================================
+   INFORMATIONS ÉLÈVE
+========================================== */
+
+.eleve-info {
+  background: white;
+
+  padding: 20px 25px;
+
+  border-radius: 10px;
+
+  margin-bottom: 25px;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.08);
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 25px;
+}
+
+.eleve-info div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.eleve-info span {
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+.eleve-info strong {
+  color: #15324b;
+
+  font-size: 17px;
+}
+
+/* ==========================================
+   STATISTIQUES
+========================================== */
+
+.absences-statistiques {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 20px;
+
+  margin-bottom: 25px;
+}
+
+.statistique-card {
+  background: #a7a296;
+
+  border-radius: 10px;
+
+  padding: 20px;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+.statistique-icon {
+  font-size: 30px;
+}
+
+.statistique-card div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.statistique-card span:not(.statistique-icon) {
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+.statistique-card strong {
+  font-size: 24px;
+
+  color: #15324b;
+}
+
+/* ==========================================
+   CARTE PRINCIPALE
+========================================== */
+
+.absences-card {
+  background: #a7a296;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.08);
+
+  overflow: hidden;
+}
+
+.absences-card-header {
+  padding: 22px 25px;
+
+  border-bottom:
+    1px solid #e5e7eb;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+.absences-card-header h2 {
+  margin: 0 0 6px;
+
+  color: #15324b;
+}
+
+.absences-card-header p {
+  margin: 0;
+
+  color: #6b7280;
+}
+
+.absences-count {
+  background: #15324b;
+
+  color: white;
+
+  min-width: 35px;
+  height: 35px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-weight: bold;
+}
+
+/* ==========================================
+   TABLEAU
+========================================== */
+
+.absences-table-container {
+  overflow-x: auto;
+}
+
+.absences-table-container table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.absences-table-container th {
+  background: #f8fafc;
+
+  color: #15324b;
+
+  text-align: left;
+
+  padding: 15px 18px;
+
+  border-bottom:
+    1px solid #e5e7eb;
+
+  font-size: 14px;
+}
+
+.absences-table-container td {
+  padding: 15px 18px;
+
+  border-bottom:
+    1px solid #e5e7eb;
+
+  font-size: 14px;
+}
+
+.absences-table-container tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* ==========================================
+   BADGES
+========================================== */
+
+.badge-absence {
+  display: inline-block;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  background: #fee2e2;
+
+  color: #991b1b;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.badge-retard {
+  display: inline-block;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  background: #fef3c7;
+
+  color: #92400e;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+/* ==========================================
+   AUCUNE ABSENCE
+========================================== */
+
+.aucune-absence {
+  padding: 50px 20px;
+
+  text-align: center;
+
+  color: #6b7280;
+}
+
+.aucune-absence span {
+  display: block;
+
+  font-size: 45px;
+
+  margin-bottom: 10px;
+}
+
+.aucune-absence h3 {
+  margin: 0 0 8px;
+
+  color: #15324b;
+}
+
+.aucune-absence p {
+  margin: 0;
+}
+
+/* ==========================================
+   CHARGEMENT
+========================================== */
+
+.absences-loading {
+  background: white;
+
+  padding: 40px;
+
+  border-radius: 10px;
+
+  text-align: center;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================
+   ERREUR
+========================================== */
+
+.absences-erreur {
+  background: #fee2e2;
+
+  color: #991b1b;
+
+  padding: 16px 20px;
+
+  border-radius: 8px;
+
+  margin-bottom: 20px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 800px) {
+
+  .absences-header {
+    padding: 20px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .absences-content {
+    padding: 20px;
+  }
+
+  .eleve-info {
+    grid-template-columns: 1fr;
+  }
+
+  .absences-statistiques {
+    grid-template-columns: 1fr;
+  }
+
+  .absences-header h1 {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .absences-card-header {
+    padding: 18px;
+  }
+
+  .absences-table-container th,
+  .absences-table-container td {
+    padding: 12px;
+    white-space: nowrap;
+  }
+}

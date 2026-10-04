@@ -1,0 +1,151 @@
+.admin-annees {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-annees h1 {
+    margin-bottom: 10px;
+    color: #15324B;
+}
+
+.description {
+    margin-bottom: 30px;
+    color: #4b4842;
+}
+
+.annee-message {
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #a7a296;
+    color: #25231f;
+    border: 1px solid #8e8a80;
+}
+
+.annee-form,
+.annees-liste {
+    background-color: #a7a296;
+    color: #25231f;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.annee-form h2,
+.annees-liste h2 {
+    margin-top: 0;
+    color: #25231f;
+}
+
+.annee-form form {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #25231f;
+}
+
+.form-group input {
+    width: 260px;
+    padding: 11px 13px;
+    border: 1px solid #77736a;
+    border-radius: 7px;
+    background-color: #f1efe9;
+    color: #25231f;
+    font-size: 15px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #15324B;
+}
+
+.btn-primary,
+.btn-activer {
+    border: none;
+    border-radius: 7px;
+    padding: 11px 18px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background-color: #15324B;
+    color: white;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.annees-table-container {
+    overflow-x: auto;
+}
+
+.annees-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.annees-table th,
+.annees-table td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #858178;
+    color: #25231f;
+}
+
+.annees-table th {
+    font-weight: 700;
+}
+
+.badge-active {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background-color: #15324B;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.badge-inactive {
+    color: #5f5b53;
+    font-size: 14px;
+}
+
+.btn-activer {
+    background-color: #15324B;
+    color: white;
+}
+
+.btn-activer:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 700px) {
+    .admin-annees {
+        padding: 15px;
+    }
+
+    .annee-form form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-group input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

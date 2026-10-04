@@ -1,0 +1,153 @@
+.emploi-utilisateur {
+  min-height: 100vh;
+  background: wheat;
+  color: #1f2937;
+}
+
+.emploi-header {
+  background: #15324B;
+  color: white;
+  padding: 25px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.emploi-header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.emploi-header p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.emploi-retour {
+  border: none;
+  background: white;
+  color: #15324B;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.emploi-contenu {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.emploi-utilisateur-info {
+  background: white;
+  padding: 18px 22px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.emploi-contenu h2 {
+  margin-bottom: 20px;
+}
+
+.emploi-grille {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  overflow-x: auto;
+}
+
+.emploi-jour {
+  background: #a7a296;
+  border-radius: 10px;
+  min-width: 180px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.emploi-jour-titre {
+  background: #15324B;
+  color: white;
+  text-align: center;
+  padding: 14px 8px;
+  font-weight: bold;
+}
+
+.emploi-jour-contenu {
+  padding: 10px;
+}
+
+.emploi-cours {
+  background: #eef3f7;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.emploi-matiere {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.emploi-heure {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.emploi-salle {
+  font-size: 13px;
+  color: #555;
+}
+
+.emploi-vide {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
+
+.emploi-message {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.emploi-erreur {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 900px) {
+  .emploi-grille {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .emploi-header {
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .emploi-contenu {
+    padding: 20px;
+  }
+
+  .emploi-grille {
+    grid-template-columns: 1fr;
+  }
+
+  .emploi-utilisateur-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

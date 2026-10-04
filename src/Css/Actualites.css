@@ -52,10 +52,21 @@
    SECTION
 ========================= */
 
-.actualites-section {
+.actualites-section .actualites-affiche{
     max-width: 1100px;
     margin: 0 auto;
     padding: 60px 20px;
+}
+
+.actualites-affiche{
+     max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.actualites-sous-affiche{
+    text-align: center;
+    margin-bottom: 40px;
 }
 
 .section-heading {
@@ -398,4 +409,40 @@
         max-width: 90%;
         max-height: 75vh;
     }
+}
+
+
+.annonce-simple {
+    background: #fdfaf3;
+    border-left: 5px solid #15324B;
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.annonce-simple .actualite-tag {
+    background: #15324B;
+    color: white;
+}
+
+.annonce-simple h3 {
+    color: #15324B;
+    font-size: 22px;
+    margin: 12px 0 8px;
+}
+
+.annonce-simple p {
+    color: #444;
+    line-height: 1.6;
+    margin: 0 0 10px;
+}
+
+.annonce-simple .actualite-date {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    font-size: 13px;
+    color: #15324B;
+    font-weight: 600;
 }

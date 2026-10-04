@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import '../Css/Connexion.css';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Connexion() {
     const [email, setEmail] = useState('');
     const [motDePasse, setMotDePasse] = useState('');
     const [erreur, setErreur] = useState('');
     const [chargement, setChargement] = useState(false);
-    
+
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const typeParam = searchParams.get('type');
@@ -36,11 +36,11 @@ export default function Connexion() {
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
 
-           if (data.user.role === 'admin') {
-    navigate('/admin');
-} else {
-    navigate('/tableau-de-bord');
-}
+            if (data.user.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/tableau-de-bord');
+            }
         } catch {
             setErreur('Impossible de contacter le serveur. Vérifie qu\'il est bien lancé.');
         } finally {
@@ -60,21 +60,21 @@ export default function Connexion() {
 
                 <form onSubmit={handleConnexion}>
                     <label>Email</label>
-                    <input 
-                        type="email" 
-                        placeholder="Votre adresse email" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        required 
+                    <input
+                        type="email"
+                        placeholder="Votre adresse email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
                     />
 
                     <label>Mot de passe</label>
-                    <input 
-                        type="password" 
-                        placeholder="Votre mot de passe" 
-                        value={motDePasse} 
-                        onChange={(e) => setMotDePasse(e.target.value)} 
-                        required 
+                    <input
+                        type="password"
+                        placeholder="Votre mot de passe"
+                        value={motDePasse}
+                        onChange={(e) => setMotDePasse(e.target.value)}
+                        required
                     />
 
                     {erreur && <p className="erreur-connexion">{erreur}</p>}

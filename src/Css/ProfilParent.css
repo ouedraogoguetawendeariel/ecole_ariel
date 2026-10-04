@@ -1,0 +1,366 @@
+.profil-parent-page {
+    min-height: 100vh;
+    background-color: wheat;
+    color: #25231f;
+}
+
+.profil-parent-header {
+ background: #15324b;
+  color: white;
+ padding: 30px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.profil-parent-header h1 {
+    margin: 0;
+    font-size: 25px;
+}
+
+.profil-parent-retour {
+   border: none;
+  background: white;
+  color: #15324b;
+
+  padding: 11px 18px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.profil-parent-container {
+    width: min(1000px, calc(100% - 40px));
+    margin: 35px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.profil-parent-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e0e2e5;
+    padding: 25px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.profil-parent-identite {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.profil-parent-avatar,
+.profil-parent-enfant-avatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: #15324B;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.profil-parent-identite h2 {
+    margin: 0 0 6px;
+    color: #15324B;
+}
+
+.profil-parent-identite p {
+    margin: 0;
+    color: #666;
+}
+
+.profil-parent-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.profil-parent-section-title > span {
+    font-size: 25px;
+}
+
+.profil-parent-section-title h2 {
+    margin: 0 0 4px;
+    color: #15324B;
+    font-size: 20px;
+}
+
+.profil-parent-section-title p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+.profil-parent-informations {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.profil-parent-information {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f7f8f9;
+    border: 1px solid #e5e6e8;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.profil-parent-information span {
+    color: #777;
+    font-size: 13px;
+}
+
+.profil-parent-information strong {
+    color: #25231f;
+}
+
+.profil-parent-information-complet {
+    grid-column: 1 / -1;
+}
+
+/* ENFANTS */
+
+.profil-parent-enfants {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.profil-parent-enfant {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    text-align: left;
+}
+
+.profil-parent-enfant.actif {
+    border: 2px solid #15324B;
+    background-color: #e8f0f7;
+}
+
+.profil-parent-enfant-avatar {
+    width: 45px;
+    height: 45px;
+    font-size: 15px;
+}
+
+.profil-parent-enfant div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.profil-parent-enfant strong {
+    color: #15324B;
+}
+
+.profil-parent-enfant span {
+    color: #777;
+    font-size: 13px;
+}
+
+.profil-parent-aucun-enfant {
+    padding: 15px;
+    border-radius: 8px;
+    background: #fff8e8;
+    color: #775d20;
+}
+
+/* ACTIONS */
+
+.profil-parent-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.profil-parent-actions button {
+    padding: 11px 17px;
+    border-radius: 7px;
+    border: 1px solid #15324B;
+    background-color: white;
+    color: #15324B;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.profil-parent-actions button:hover {
+    background-color: #15324B;
+    color: white;
+}
+
+/* FORMULAIRE */
+
+.profil-parent-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.profil-parent-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.profil-parent-form-group label {
+    color: #15324B;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.profil-parent-form-group input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #d5d9dd;
+    border-radius: 7px;
+    font-size: 14px;
+    outline: none;
+}
+
+.profil-parent-form-group input:focus {
+    border-color: #15324B;
+}
+
+.profil-parent-form-full {
+    grid-column: 1 / -1;
+}
+
+.profil-parent-form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+}
+
+.profil-parent-form-actions button {
+    padding: 11px 18px;
+    border-radius: 7px;
+    border: 1px solid #15324B;
+    background: #15324B;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.profil-parent-form-actions button:last-child {
+    background: white;
+    color: #15324B;
+}
+
+/* MESSAGES */
+
+.profil-parent-message-succes {
+    padding: 13px 16px;
+    border-radius: 8px;
+    background-color: #e8f5e9;
+    border: 1px solid #b7dfba;
+    color: #246b2a;
+    font-weight: 600;
+}
+
+.profil-parent-message-erreur {
+    padding: 13px 16px;
+    border-radius: 8px;
+    background-color: #fff0f0;
+    border: 1px solid #e4bcbc;
+    color: #8f2d2d;
+    font-weight: 600;
+}
+
+/* CHARGEMENT / ERREUR */
+
+.profil-parent-chargement {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #15324B;
+    font-weight: 600;
+}
+
+.profil-parent-erreur {
+    width: min(500px, calc(100% - 40px));
+    margin: 100px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    color: #8f2d2d;
+    text-align: center;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .profil-parent-header {
+        padding: 18px 20px;
+    }
+
+    .profil-parent-container {
+        width: calc(100% - 25px);
+        margin: 25px auto;
+    }
+
+    .profil-parent-identite {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profil-parent-informations {
+        grid-template-columns: 1fr;
+    }
+
+    .profil-parent-information-complet {
+        grid-column: auto;
+    }
+
+    .profil-parent-form {
+        grid-template-columns: 1fr;
+    }
+
+    .profil-parent-form-full,
+    .profil-parent-form-actions {
+        grid-column: auto;
+    }
+
+    .profil-parent-form-actions {
+        flex-direction: column;
+    }
+
+    .profil-parent-form-actions button {
+        width: 100%;
+    }
+
+    .profil-parent-actions {
+        flex-direction: column;
+    }
+
+    .profil-parent-actions button {
+        width: 100%;
+    }
+}

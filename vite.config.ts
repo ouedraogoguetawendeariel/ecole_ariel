@@ -12,5 +12,5 @@ export default defineConfig({
       png: { quality: 75 },
     }),
   ],
-  base: '/ecole_ariel/',
+  base: '/',
 })

@@ -1,6 +1,6 @@
 .admin-eleves {
     min-height: 100vh;
-    background: #f4f6f8;
+    background: wheat;
 }
 
 .admin-eleves-header {
@@ -38,7 +38,7 @@
 }
 
 .eleves-resume {
-    background: white;
+    background: #a7a296;
     padding: 20px 25px;
     border-radius: 12px;
     margin-bottom: 25px;
@@ -52,7 +52,7 @@
 }
 
 .table-container {
-    background: white;
+    background: #a7a296;
     border-radius: 12px;
     overflow-x: auto;
     box-shadow: 0 3px 10px rgba(0,0,0,.08);

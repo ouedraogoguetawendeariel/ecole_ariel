@@ -38,8 +38,8 @@ export default function Utilisateur() {
                         Suivez la scolarité de votre enfant.
                     </p>
                    <button onClick={() => navigate('/connexion?type=parent')}>
-    Connexion parent
-</button>
+                         Connexion parent
+                    </button>
                 </div>
 
             </div>

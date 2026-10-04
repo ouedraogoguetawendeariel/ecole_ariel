@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../Css/AdminBulletin.css';
+import '../Css/AdminTheme.css';
+import AdminHeader from '../components/AdminHeader';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL;
+
+interface AnneeScolaire {
+    id: number;
+    libelle: string;
+    active: boolean;
+}
 
 interface Eleve {
     id: number;
@@ -12,9 +19,12 @@ interface Eleve {
 }
 
 export default function AdminBulletin() {
-    const navigate = useNavigate();
-
+    const [annees, setAnnees] = useState<AnneeScolaire[]>([]);
+    const [classes, setClasses] = useState<string[]>([]);
     const [eleves, setEleves] = useState<Eleve[]>([]);
+
+    const [anneeScolaireId, setAnneeScolaireId] = useState('');
+    const [classe, setClasse] = useState('');
     const [eleveId, setEleveId] = useState('');
     const [periode, setPeriode] = useState('Trimestre 1');
     const [titre, setTitre] = useState('');
@@ -22,22 +32,100 @@ export default function AdminBulletin() {
 
     const [message, setMessage] = useState('');
     const [erreur, setErreur] = useState('');
+
     const [chargement, setChargement] = useState(false);
-    const [chargementEleves, setChargementEleves] = useState(true);
+    const [chargementInitial, setChargementInitial] = useState(true);
+    const [chargementEleves, setChargementEleves] = useState(false);
 
     /*
-     * ==========================================
-     * RÉCUPÉRER LES ÉLÈVES
-     * ==========================================
+     * Charger les années scolaires et les classes
      */
+    useEffect(() => {
+        const chargerOptions = async () => {
+            try {
+                const token = localStorage.getItem('token');
 
+                const headers = {
+                    Authorization: `Bearer ${token}`,
+                };
+
+                const [anneesRes, classesRes] = await Promise.all([
+                    fetch(`${API_URL}/api/bulletins/options/annees`, {
+                        headers,
+                    }),
+                    fetch(`${API_URL}/api/bulletins/options/classes`, {
+                        headers,
+                    }),
+                ]);
+
+                const anneesData = await anneesRes.json();
+                const classesData = await classesRes.json();
+
+                if (!anneesRes.ok) {
+                    setErreur(
+                        anneesData.message ||
+                        'Impossible de récupérer les années scolaires.'
+                    );
+                    return;
+                }
+
+                if (!classesRes.ok) {
+                    setErreur(
+                        classesData.message ||
+                        'Impossible de récupérer les classes.'
+                    );
+                    return;
+                }
+
+                setAnnees(anneesData.annees || []);
+                setClasses(classesData.classes || []);
+
+                /*
+                 * Sélectionner automatiquement l'année active
+                 */
+                const anneeActive = (anneesData.annees || []).find(
+                    (annee: AnneeScolaire) => annee.active
+                );
+
+                if (anneeActive) {
+                    setAnneeScolaireId(String(anneeActive.id));
+                } else if ((anneesData.annees || []).length > 0) {
+                    setAnneeScolaireId(
+                        String(anneesData.annees[0].id)
+                    );
+                }
+            } catch (error) {
+                console.error(error);
+                setErreur(
+                    'Impossible de contacter le serveur.'
+                );
+            } finally {
+                setChargementInitial(false);
+            }
+        };
+
+        chargerOptions();
+    }, []);
+
+    /*
+     * Charger les élèves lorsque la classe change
+     */
     useEffect(() => {
         const chargerEleves = async () => {
+            if (!classe) {
+                setEleves([]);
+                setEleveId('');
+                return;
+            }
+
+            setChargementEleves(true);
+            setErreur('');
+
             try {
                 const token = localStorage.getItem('token');
 
                 const res = await fetch(
-                    `${API_URL}/api/admin/eleves`,
+                    `${API_URL}/api/bulletins/options/eleves?classe=${encodeURIComponent(classe)}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -52,36 +140,48 @@ export default function AdminBulletin() {
                         data.message ||
                         'Impossible de récupérer les élèves.'
                     );
+                    setEleves([]);
                     return;
                 }
 
                 setEleves(data.eleves || []);
-
-            } catch {
+                setEleveId('');
+            } catch (error) {
+                console.error(error);
                 setErreur(
                     'Impossible de contacter le serveur.'
                 );
+                setEleves([]);
             } finally {
                 setChargementEleves(false);
             }
         };
 
         chargerEleves();
-    }, []);
+    }, [classe]);
 
     /*
-     * ==========================================
-     * PUBLICATION DU BULLETIN
-     * ==========================================
+     * Publication du bulletin
      */
-
-    const handlePublier = async (
-        e: React.FormEvent
-    ) => {
+    const handlePublier = async (e: React.FormEvent) => {
         e.preventDefault();
 
         setErreur('');
         setMessage('');
+
+        if (!anneeScolaireId) {
+            setErreur(
+                'Veuillez sélectionner une année scolaire.'
+            );
+            return;
+        }
+
+        if (!classe) {
+            setErreur(
+                'Veuillez sélectionner une classe.'
+            );
+            return;
+        }
 
         if (!eleveId) {
             setErreur(
@@ -111,10 +211,7 @@ export default function AdminBulletin() {
             return;
         }
 
-        if (
-            fichierPdf.type !==
-            'application/pdf'
-        ) {
+        if (fichierPdf.type !== 'application/pdf') {
             setErreur(
                 'Le fichier doit être au format PDF.'
             );
@@ -124,81 +221,54 @@ export default function AdminBulletin() {
         setChargement(true);
 
         try {
-            const token =
-                localStorage.getItem('token');
-
-            /*
-             * ======================================
-             * ÉTAPE 1 : UPLOAD DU PDF
-             * ======================================
-             */
+            const token = localStorage.getItem('token');
 
             const formData = new FormData();
+
+            formData.append(
+                'anneeScolaireId',
+                anneeScolaireId
+            );
+
+            formData.append(
+                'classe',
+                classe
+            );
+
+            formData.append(
+                'eleveId',
+                eleveId
+            );
+
+            formData.append(
+                'periode',
+                periode
+            );
+
+            formData.append(
+                'titre',
+                titre.trim()
+            );
 
             formData.append(
                 'pdf',
                 fichierPdf
             );
 
-            const uploadRes = await fetch(
-                `${API_URL}/api/upload/upload-pdf`,
+            const res = await fetch(
+                `${API_URL}/api/bulletins/publier`,
                 {
                     method: 'POST',
                     headers: {
-                        Authorization:
-                            `Bearer ${token}`,
+                        Authorization: `Bearer ${token}`,
                     },
                     body: formData,
                 }
             );
 
-            const uploadData =
-                await uploadRes.json();
+            const data = await res.json();
 
-            if (!uploadRes.ok) {
-                setErreur(
-                    uploadData.message ||
-                    "Échec de l'envoi du fichier PDF."
-                );
-                return;
-            }
-
-            const { url } = uploadData;
-
-            /*
-             * ======================================
-             * ÉTAPE 2 : ENREGISTRER LE BULLETIN
-             * ======================================
-             */
-
-            const actualiteRes =
-                await fetch(
-                    `${API_URL}/api/actualites`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type':
-                                'application/json',
-
-                            Authorization:
-                                `Bearer ${token}`,
-                        },
-
-                        body: JSON.stringify({
-                            type: 'bulletin',
-                            titre: titre.trim(),
-                            eleveId:
-                                Number(eleveId),
-                            periode,
-                            fichierUrl: url,
-                        }),
-                    }
-                );
-
-            const data =
-                await actualiteRes.json();
-
-            if (!actualiteRes.ok) {
+            if (!res.ok) {
                 setErreur(
                     data.message ||
                     'Impossible de publier le bulletin.'
@@ -210,13 +280,14 @@ export default function AdminBulletin() {
                 'Bulletin publié avec succès.'
             );
 
-            // Réinitialiser le formulaire
+            /*
+             * Réinitialisation du formulaire
+             */
             setEleveId('');
             setPeriode('Trimestre 1');
             setTitre('');
             setFichierPdf(null);
 
-            // Réinitialiser l'input fichier
             const fichierInput =
                 document.getElementById(
                     'fichierPdf'
@@ -226,7 +297,9 @@ export default function AdminBulletin() {
                 fichierInput.value = '';
             }
 
-        } catch {
+        } catch (error) {
+            console.error(error);
+
             setErreur(
                 'Impossible de contacter le serveur.'
             );
@@ -236,49 +309,84 @@ export default function AdminBulletin() {
     };
 
     return (
-        <div className="admin-bulletin">
+        <div className="admin-eleves">
 
-            <div className="admin-bulletin-box">
+            <AdminHeader
+                titre="Publier un bulletin"
+                sousTitre="Publiez le bulletin PDF d'un élève."
+            />
 
-                {/* =========================
-                    EN-TÊTE
-                ========================== */}
-
-                <div className="admin-bulletin-header">
-
-                    <div>
-                        <h1>
-                            Publier un bulletin
-                        </h1>
-
-                        <p>
-                            Envoyez le bulletin PDF
-                            d'un élève.
-                        </p>
-                    </div>
-
-                    <button
-                        type="button"
-                        onClick={() =>
-                            navigate('/admin')
-                        }
-                    >
-                        ← Retour
-                    </button>
-
-                </div>
-
-
-                {/* =========================
-                    FORMULAIRE
-                ========================== */}
+            <main className="admin-eleves-content">
 
                 <form
                     onSubmit={handlePublier}
+                    className="admin-bulletin-box"
                 >
 
-                    {/* Élève */}
+                    {/* ANNÉE SCOLAIRE */}
+                    <label htmlFor="anneeScolaire">
+                        Année scolaire
+                    </label>
 
+                    <select
+                        id="anneeScolaire"
+                        value={anneeScolaireId}
+                        onChange={(e) =>
+                            setAnneeScolaireId(e.target.value)
+                        }
+                        required
+                        disabled={chargementInitial}
+                    >
+                        <option value="">
+                            {chargementInitial
+                                ? 'Chargement...'
+                                : '-- Sélectionner une année scolaire --'}
+                        </option>
+
+                        {annees.map((annee) => (
+                            <option
+                                key={annee.id}
+                                value={annee.id}
+                            >
+                                {annee.libelle}
+                                {annee.active
+                                    ? ' — Année active'
+                                    : ''}
+                            </option>
+                        ))}
+                    </select>
+
+
+                    {/* CLASSE */}
+                    <label htmlFor="classe">
+                        Classe
+                    </label>
+
+                    <select
+                        id="classe"
+                        value={classe}
+                        onChange={(e) =>
+                            setClasse(e.target.value)
+                        }
+                        required
+                        disabled={chargementInitial}
+                    >
+                        <option value="">
+                            -- Sélectionner une classe --
+                        </option>
+
+                        {classes.map((classeItem) => (
+                            <option
+                                key={classeItem}
+                                value={classeItem}
+                            >
+                                {classeItem}
+                            </option>
+                        ))}
+                    </select>
+
+
+                    {/* ÉLÈVE */}
                     <label htmlFor="eleve">
                         Élève
                     </label>
@@ -287,20 +395,20 @@ export default function AdminBulletin() {
                         id="eleve"
                         value={eleveId}
                         onChange={(e) =>
-                            setEleveId(
-                                e.target.value
-                            )
+                            setEleveId(e.target.value)
                         }
                         required
                         disabled={
+                            !classe ||
                             chargementEleves
                         }
                     >
-
                         <option value="">
-                            {chargementEleves
-                                ? 'Chargement des élèves...'
-                                : '-- Sélectionner un élève --'}
+                            {!classe
+                                ? '-- Sélectionnez d’abord une classe --'
+                                : chargementEleves
+                                    ? 'Chargement des élèves...'
+                                    : '-- Sélectionner un élève --'}
                         </option>
 
                         {eleves.map((eleve) => (
@@ -308,18 +416,13 @@ export default function AdminBulletin() {
                                 key={eleve.id}
                                 value={eleve.id}
                             >
-                                {eleve.prenom}{' '}
-                                {eleve.nom}
-                                {' — '}
-                                {eleve.classe}
+                                {eleve.prenom} {eleve.nom}
                             </option>
                         ))}
-
                     </select>
 
 
-                    {/* Titre */}
-
+                    {/* TITRE */}
                     <label htmlFor="titre">
                         Titre du bulletin
                     </label>
@@ -330,16 +433,13 @@ export default function AdminBulletin() {
                         placeholder="Ex : Bulletin du 1er trimestre"
                         value={titre}
                         onChange={(e) =>
-                            setTitre(
-                                e.target.value
-                            )
+                            setTitre(e.target.value)
                         }
                         required
                     />
 
 
-                    {/* Période */}
-
+                    {/* PÉRIODE */}
                     <label htmlFor="periode">
                         Période
                     </label>
@@ -348,13 +448,10 @@ export default function AdminBulletin() {
                         id="periode"
                         value={periode}
                         onChange={(e) =>
-                            setPeriode(
-                                e.target.value
-                            )
+                            setPeriode(e.target.value)
                         }
                         required
                     >
-
                         <option value="Trimestre 1">
                             Trimestre 1
                         </option>
@@ -366,12 +463,10 @@ export default function AdminBulletin() {
                         <option value="Trimestre 3">
                             Trimestre 3
                         </option>
-
                     </select>
 
 
                     {/* PDF */}
-
                     <label htmlFor="fichierPdf">
                         Fichier PDF
                     </label>
@@ -382,8 +477,7 @@ export default function AdminBulletin() {
                         accept="application/pdf"
                         onChange={(e) =>
                             setFichierPdf(
-                                e.target.files?.[0] ||
-                                null
+                                e.target.files?.[0] || null
                             )
                         }
                         required
@@ -396,23 +490,21 @@ export default function AdminBulletin() {
                     )}
 
 
-                    {/* Messages */}
-
+                    {/* MESSAGES */}
                     {erreur && (
-                        <p className="erreur-admin">
+                        <p className="message-erreur">
                             {erreur}
                         </p>
                     )}
 
                     {message && (
-                        <p className="succes-admin">
+                        <p className="message-succes">
                             {message}
                         </p>
                     )}
 
 
-                    {/* Bouton */}
-
+                    {/* BOUTON */}
                     <button
                         type="submit"
                         disabled={chargement}
@@ -424,8 +516,9 @@ export default function AdminBulletin() {
 
                 </form>
 
-            </div>
+            </main>
 
         </div>
     );
 }
+

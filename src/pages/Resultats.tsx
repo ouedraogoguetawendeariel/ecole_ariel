@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Css/Resultats.css';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface Note {
   id: number;
@@ -33,8 +33,17 @@ interface User {
   nom?: string;
   prenom?: string;
   email?: string;
-  classe?: string;
-  role?: string;
+  classe?: string | null;
+  role?: 'eleve' | 'parent';
+}
+
+interface Enfant {
+  id: number;
+  prenom?: string;
+  nom: string;
+  email: string;
+  classe: string;
+  date_naissance: string;
 }
 
 export default function Resultats() {
@@ -43,92 +52,151 @@ export default function Resultats() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [bulletins, setBulletins] = useState<Bulletin[]>([]);
 
-  const [chargement, setChargement] = useState(true);
-  const [erreur, setErreur] = useState('');
+  const [chargement, setChargement] =
+    useState(true);
 
-  const [trimestre, setTrimestre] = useState('Trimestre 1');
+  const [erreur, setErreur] =
+    useState('');
 
-  const [user, setUser] = useState<User | null>(null);
+  const [trimestre, setTrimestre] =
+    useState('Trimestre 1');
 
-  // ================================
-  // UTILISATEUR CONNECTÉ
-  // ================================
+  const [user, setUser] =
+    useState<User | null>(null);
 
-  useEffect(() => {
-    const userData = localStorage.getItem('user');
+  const [enfant, setEnfant] =
+    useState<Enfant | null>(null);
 
-    if (userData) {
-      try {
-        setUser(JSON.parse(userData));
-      } catch {
-        setUser(null);
-      }
-    }
-  }, []);
-
-  // ================================
-  // CHARGER NOTES + BULLETINS
-  // ================================
+  // ==========================================
+  // CHARGEMENT DES DONNÉES
+  // ==========================================
 
   useEffect(() => {
     const chargerDonnees = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token =
+          localStorage.getItem('token');
 
         if (!token) {
           navigate('/connexion');
           return;
         }
 
+        const userData =
+          localStorage.getItem('user');
+
+        if (!userData) {
+          navigate('/connexion');
+          return;
+        }
+
+        const utilisateur: User =
+          JSON.parse(userData);
+
+        setUser(utilisateur);
+
         const headers = {
           Authorization: `Bearer ${token}`,
         };
 
-        // ============================
+        // ======================================
+        // SI PARENT : RÉCUPÉRER SON ENFANT
+        // ======================================
+
+        if (utilisateur.role === 'parent') {
+          const enfantsRes = await fetch(
+            `${API_URL}/api/children`,
+            {
+              headers,
+            }
+          );
+
+          const enfantsData =
+            await enfantsRes.json();
+
+          if (!enfantsRes.ok) {
+            throw new Error(
+              enfantsData.message ||
+                'Impossible de récupérer les enfants.'
+            );
+          }
+
+          const enfants: Enfant[] =
+            enfantsData.enfants || [];
+
+          if (enfants.length === 0) {
+            throw new Error(
+              "Aucun enfant n'est associé à ce compte parent."
+            );
+          }
+
+          /*
+           * Pour le moment, nous prenons
+           * le premier enfant associé.
+           */
+          setEnfant(enfants[0]);
+        }
+
+        // ======================================
         // NOTES
-        // ============================
+        // ======================================
 
         const notesRes = await fetch(
           `${API_URL}/api/notes`,
-          { headers }
+          {
+            headers,
+          }
         );
 
-        const notesData = await notesRes.json();
+        const notesData =
+          await notesRes.json();
 
         if (!notesRes.ok) {
-          setErreur(
+          throw new Error(
             notesData.message ||
-            'Impossible de récupérer les notes.'
+              'Impossible de récupérer les notes.'
           );
-          return;
         }
 
-        setNotes(notesData.notes || []);
+        setNotes(
+          notesData.notes || []
+        );
 
-        // ============================
+        // ======================================
         // BULLETINS
-        // ============================
+        // ======================================
 
         const bulletinsRes = await fetch(
           `${API_URL}/api/bulletins`,
-          { headers }
+          {
+            headers,
+          }
         );
 
-        const bulletinsData = await bulletinsRes.json();
+        const bulletinsData =
+          await bulletinsRes.json();
 
         if (!bulletinsRes.ok) {
-          setErreur(
+          throw new Error(
             bulletinsData.message ||
-            'Impossible de récupérer les bulletins.'
+              'Impossible de récupérer les bulletins.'
           );
-          return;
         }
 
-        setBulletins(bulletinsData.bulletins || []);
+        setBulletins(
+          bulletinsData.bulletins || []
+        );
 
-      } catch {
+      } catch (error) {
+        console.error(
+          'Erreur résultats :',
+          error
+        );
+
         setErreur(
-          'Impossible de contacter le serveur.'
+          error instanceof Error
+            ? error.message
+            : 'Impossible de contacter le serveur.'
         );
       } finally {
         setChargement(false);
@@ -138,77 +206,271 @@ export default function Resultats() {
     chargerDonnees();
   }, [navigate]);
 
-  // ================================
+  // ==========================================
   // NOTES DU TRIMESTRE
-  // ================================
+  // ==========================================
 
-  const notesTrimestre = notes.filter(
-    (item) => item.trimestre === trimestre
-  );
+  const notesTrimestre =
+    notes.filter(
+      (item) =>
+        item.trimestre === trimestre
+    );
 
-  // ================================
-  // INFORMATIONS ÉLÈVE
-  // ================================
+  // ==========================================
+  // INFORMATIONS DE L'ÉLÈVE
+  // ==========================================
 
-  const eleve = notesTrimestre[0];
+  let nom = '-';
+  let prenom = '-';
+  let classe = '-';
 
-  const nom =
-    user?.role === 'eleve'
-      ? user.nom || '-'
-      : eleve?.nom || bulletins[0]?.nom || '-';
+  if (user?.role === 'eleve') {
+    nom = user.nom || '-';
+    prenom = user.prenom || '-';
+    classe = user.classe || '-';
+  }
 
-  const prenom =
-    user?.role === 'eleve'
-      ? user.prenom || '-'
-      : eleve?.prenom || bulletins[0]?.prenom || '-';
+  if (user?.role === 'parent') {
+    nom = enfant?.nom || '-';
+    prenom = enfant?.prenom || '-';
+    classe = enfant?.classe || '-';
+  }
 
-  const classe =
-    user?.role === 'eleve'
-      ? user.classe || '-'
-      : eleve?.classe || bulletins[0]?.classe || '-';
+  /*
+   * Si le serveur fournit également
+   * les informations dans les notes/bulletins,
+   * on peut les utiliser comme secours.
+   */
+  if (nom === '-' && notesTrimestre[0]?.nom) {
+    nom = notesTrimestre[0].nom;
+  }
 
-  // ================================
+  if (
+    prenom === '-' &&
+    notesTrimestre[0]?.prenom
+  ) {
+    prenom =
+      notesTrimestre[0].prenom;
+  }
+
+  if (
+    classe === '-' &&
+    notesTrimestre[0]?.classe
+  ) {
+    classe =
+      notesTrimestre[0].classe;
+  }
+
+  if (
+    nom === '-' &&
+    bulletins[0]?.nom
+  ) {
+    nom = bulletins[0].nom;
+  }
+
+  if (
+    prenom === '-' &&
+    bulletins[0]?.prenom
+  ) {
+    prenom =
+      bulletins[0].prenom;
+  }
+
+  if (
+    classe === '-' &&
+    bulletins[0]?.classe
+  ) {
+    classe =
+      bulletins[0].classe;
+  }
+
+  // ==========================================
   // MOYENNE
-  // ================================
+  // ==========================================
 
-  const totalPoints = notesTrimestre.reduce(
-    (total, item) =>
-      total +
-      Number(item.note) *
-      Number(item.coefficient),
-    0
-  );
+  const totalPoints =
+    notesTrimestre.reduce(
+      (total, item) =>
+        total +
+        Number(item.note) *
+          Number(item.coefficient),
+      0
+    );
 
-  const totalCoefficients = notesTrimestre.reduce(
-    (total, item) =>
-      total +
-      Number(item.coefficient),
-    0
-  );
+  const totalCoefficients =
+    notesTrimestre.reduce(
+      (total, item) =>
+        total +
+        Number(item.coefficient),
+      0
+    );
 
   const moyenne =
     totalCoefficients > 0
-      ? totalPoints / totalCoefficients
+      ? totalPoints /
+        totalCoefficients
       : 0;
 
-  // ================================
+  // ==========================================
   // OUVRIR LE PDF
-  // ================================
+  // ==========================================
 
-  const ouvrirBulletin = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
+  const ouvrirBulletin =
+    async (id: number) => {
+      try {
+        const token =
+          localStorage.getItem('token');
 
-  // ================================
+        if (!token) {
+          navigate('/connexion');
+          return;
+        }
+
+        const nouvelleFenetre =
+          window.open(
+            '',
+            '_blank'
+          );
+
+        if (!nouvelleFenetre) {
+          alert(
+            'Autorisez les fenêtres pop-up pour ouvrir le bulletin.'
+          );
+          return;
+        }
+
+        const response =
+          await fetch(
+            `${API_URL}/api/bulletins/${id}/fichier`,
+            {
+              headers: {
+                Authorization:
+                  `Bearer ${token}`,
+              },
+            }
+          );
+
+        if (!response.ok) {
+          nouvelleFenetre.close();
+
+          const data =
+            await response
+              .json()
+              .catch(() => null);
+
+          throw new Error(
+            data?.message ||
+              'Impossible d’ouvrir le bulletin.'
+          );
+        }
+
+        const blob =
+          await response.blob();
+
+        const fichierUrl =
+          URL.createObjectURL(blob);
+
+        nouvelleFenetre.location.href =
+          fichierUrl;
+
+        setTimeout(() => {
+          URL.revokeObjectURL(
+            fichierUrl
+          );
+        }, 60000);
+
+      } catch (error) {
+        alert(
+          error instanceof Error
+            ? error.message
+            : 'Impossible d’ouvrir le bulletin.'
+        );
+      }
+    };
+
+  // ==========================================
+  // TÉLÉCHARGER LE PDF
+  // ==========================================
+
+  const telechargerBulletin =
+    async (
+      id: number,
+      titre: string
+    ) => {
+      try {
+        const token =
+          localStorage.getItem('token');
+
+        if (!token) {
+          navigate('/connexion');
+          return;
+        }
+
+        const response =
+          await fetch(
+            `${API_URL}/api/bulletins/${id}/fichier`,
+            {
+              headers: {
+                Authorization:
+                  `Bearer ${token}`,
+              },
+            }
+          );
+
+        if (!response.ok) {
+          const data =
+            await response
+              .json()
+              .catch(() => null);
+
+          throw new Error(
+            data?.message ||
+              'Impossible de télécharger le bulletin.'
+          );
+        }
+
+        const blob =
+          await response.blob();
+
+        const fichierUrl =
+          URL.createObjectURL(blob);
+
+        const lien =
+          document.createElement('a');
+
+        lien.href =
+          fichierUrl;
+
+        lien.download =
+          `${titre}.pdf`;
+
+        document.body.appendChild(
+          lien
+        );
+
+        lien.click();
+
+        lien.remove();
+
+        URL.revokeObjectURL(
+          fichierUrl
+        );
+
+      } catch (error) {
+        alert(
+          error instanceof Error
+            ? error.message
+            : 'Impossible de télécharger le bulletin.'
+        );
+      }
+    };
+
+  // ==========================================
   // AFFICHAGE
-  // ================================
+  // ==========================================
 
   return (
     <div className="resultats-page">
-
-      {/* ================================
-          EN-TÊTE
-      ================================= */}
 
       <header className="resultats-header">
 
@@ -234,12 +496,9 @@ export default function Resultats() {
 
       </header>
 
-
       <main className="resultats-content">
 
-        {/* ================================
-            CHARGEMENT
-        ================================= */}
+        {/* CHARGEMENT */}
 
         {chargement && (
           <p>
@@ -247,314 +506,333 @@ export default function Resultats() {
           </p>
         )}
 
-
-        {/* ================================
-            ERREUR
-        ================================= */}
+        {/* ERREUR */}
 
         {erreur && (
           <div className="resultats-erreur">
-            {erreur}
+            ⚠️ {erreur}
           </div>
         )}
 
-
-        {!chargement && !erreur && (
-          <>
-
-            {/* ================================
-                INFORMATIONS ÉLÈVE
-            ================================= */}
-
-            <section className="eleve-info">
-
-              <div>
-                <span>
-                  Nom
-                </span>
-
-                <strong>
-                  {nom}
-                </strong>
-              </div>
-
-
-              <div>
-                <span>
-                  Prénom
-                </span>
-
-                <strong>
-                  {prenom}
-                </strong>
-              </div>
-
-
-              <div>
-                <span>
-                  Classe
-                </span>
-
-                <strong>
-                  {classe}
-                </strong>
-              </div>
-
-            </section>
-
-
-            {/* ================================
-                CHOIX DU TRIMESTRE
-            ================================= */}
-
-            <section className="resultats-filtres">
-
-              <label htmlFor="trimestre">
-                Trimestre
-              </label>
-
-              <select
-                id="trimestre"
-                value={trimestre}
-                onChange={(e) =>
-                  setTrimestre(e.target.value)
-                }
-              >
-
-                <option value="Trimestre 1">
-                  Trimestre 1
-                </option>
-
-                <option value="Trimestre 2">
-                  Trimestre 2
-                </option>
-
-                <option value="Trimestre 3">
-                  Trimestre 3
-                </option>
-
-              </select>
-
-            </section>
-
-
-            {/* ================================
-                NOTES
-            ================================= */}
-
-            <section className="resultats-card">
-
-              <h2>
-                {trimestre}
-              </h2>
-
-
-              {notesTrimestre.length === 0 ? (
-
-                <div className="aucun-resultat">
-                  Aucune note disponible pour ce trimestre.
-                </div>
-
-              ) : (
-
-                <div className="resultats-table-container">
-
-                  <table>
-
-                    <thead>
-
-                      <tr>
-                        <th>
-                          Matière
-                        </th>
-
-                        <th>
-                          Note
-                        </th>
-
-                        <th>
-                          Coefficient
-                        </th>
-
-                        <th>
-                          Points
-                        </th>
-                      </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                      {notesTrimestre.map((item) => (
-
-                        <tr key={item.id}>
-
-                          <td>
-                            {item.matiere}
-                          </td>
-
-                          <td>
-
-                            <strong>
-                              {Number(item.note).toFixed(2)}
-                              {' / 20'}
-                            </strong>
-
-                          </td>
-
-                          <td>
-                            {Number(
-                              item.coefficient
-                            ).toFixed(2)}
-                          </td>
-
-                          <td>
-                            {(
-                              Number(item.note) *
-                              Number(item.coefficient)
-                            ).toFixed(2)}
-                          </td>
-
-                        </tr>
-
-                      ))}
-
-                    </tbody>
-
-                  </table>
-
-                </div>
-
-              )}
-
-            </section>
-
-
-            {/* ================================
-                MOYENNE
-            ================================= */}
-
-            {notesTrimestre.length > 0 && (
-
-              <section className="moyenne-card">
-
-                <span>
-                  Moyenne générale
-                </span>
-
-                <strong>
-                  {moyenne.toFixed(2)}
-                  {' / 20'}
-                </strong>
-
-              </section>
-
-            )}
-
-
-            {/* ================================
-                BULLETINS PDF
-            ================================= */}
-
-            <section className="bulletins-card">
-
-              <div className="bulletins-header">
+        {!chargement &&
+          !erreur && (
+            <>
+
+              {/* ==================================
+                  INFORMATIONS ÉLÈVE
+              ================================== */}
+
+              <section className="eleve-info">
 
                 <div>
 
-                  <h2>
-                    📄 Mes bulletins
-                  </h2>
-
-                  <p>
-                    Retrouvez vos bulletins scolaires.
-                  </p>
-
-                </div>
-
-              </div>
-
-
-              {bulletins.length === 0 ? (
-
-                <div className="aucun-bulletin">
-
                   <span>
-                    📄
+                    Nom
                   </span>
 
-                  <p>
-                    Aucun bulletin disponible pour le moment.
-                  </p>
+                  <strong>
+                    {nom}
+                  </strong>
 
                 </div>
 
-              ) : (
+                <div>
 
-                <div className="bulletins-list">
+                  <span>
+                    Prénom
+                  </span>
 
-                  {bulletins.map((bulletin) => (
-
-                    <div
-                      className="bulletin-item"
-                      key={bulletin.id}
-                    >
-
-                      <div className="bulletin-icon">
-                        📄
-                      </div>
-
-
-                      <div className="bulletin-info">
-
-                        <h3>
-                          {bulletin.titre}
-                        </h3>
-
-                        <span>
-                          {bulletin.periode}
-                        </span>
-
-                      </div>
-
-
-                      <div className="bulletin-actions">
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            ouvrirBulletin(
-                              bulletin.fichier_url
-                            )
-                          }
-                        >
-                          👁 Voir le PDF
-                        </button>
-
-                        <a
-                          href={bulletin.fichier_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          download
-                        >
-                          ⬇ Télécharger
-                        </a>
-
-                      </div>
-
-                    </div>
-
-                  ))}
+                  <strong>
+                    {prenom}
+                  </strong>
 
                 </div>
+
+                <div>
+
+                  <span>
+                    Classe
+                  </span>
+
+                  <strong>
+                    {classe}
+                  </strong>
+
+                </div>
+
+              </section>
+
+              {/* ==================================
+                  CHOIX DU TRIMESTRE
+              ================================== */}
+
+              <section className="resultats-filtres">
+
+                <label htmlFor="trimestre">
+                  Trimestre
+                </label>
+
+                <select
+                  id="trimestre"
+                  value={trimestre}
+                  onChange={(e) =>
+                    setTrimestre(
+                      e.target.value
+                    )
+                  }
+                >
+
+                  <option value="Trimestre 1">
+                    Trimestre 1
+                  </option>
+
+                  <option value="Trimestre 2">
+                    Trimestre 2
+                  </option>
+
+                  <option value="Trimestre 3">
+                    Trimestre 3
+                  </option>
+
+                </select>
+
+              </section>
+
+              {/* ==================================
+                  NOTES
+              ================================== */}
+
+              <section className="resultats-card">
+
+                <h2>
+                  {trimestre}
+                </h2>
+
+                {notesTrimestre.length === 0 ? (
+
+                  <div className="aucun-resultat">
+
+                    Aucune note disponible
+                    pour ce trimestre.
+
+                  </div>
+
+                ) : (
+
+                  <div className="resultats-table-container">
+
+                    <table>
+
+                      <thead>
+
+                        <tr>
+
+                          <th>
+                            Matière
+                          </th>
+
+                          <th>
+                            Note
+                          </th>
+
+                          <th>
+                            Coefficient
+                          </th>
+
+                          <th>
+                            Points
+                          </th>
+
+                        </tr>
+
+                      </thead>
+
+                      <tbody>
+
+                        {notesTrimestre.map(
+                          (item) => (
+
+                            <tr
+                              key={item.id}
+                            >
+
+                              <td>
+                                {item.matiere}
+                              </td>
+
+                              <td>
+
+                                <strong>
+                                  {Number(
+                                    item.note
+                                  ).toFixed(2)}
+
+                                  {' / 20'}
+                                </strong>
+
+                              </td>
+
+                              <td>
+                                {Number(
+                                  item.coefficient
+                                ).toFixed(2)}
+                              </td>
+
+                              <td>
+                                {(
+                                  Number(
+                                    item.note
+                                  ) *
+                                  Number(
+                                    item.coefficient
+                                  )
+                                ).toFixed(2)}
+                              </td>
+
+                            </tr>
+
+                          )
+                        )}
+
+                      </tbody>
+
+                    </table>
+
+                  </div>
+
+                )}
+
+              </section>
+
+              {/* ==================================
+                  MOYENNE
+              ================================== */}
+
+              {notesTrimestre.length > 0 && (
+
+                <section className="moyenne-card">
+
+                  <span>
+                    Moyenne générale
+                  </span>
+
+                  <strong>
+                    {moyenne.toFixed(2)}
+                    {' / 20'}
+                  </strong>
+
+                </section>
 
               )}
 
-            </section>
+              {/* ==================================
+                  BULLETINS
+              ================================== */}
 
-          </>
-        )}
+              <section className="bulletins-card">
+
+                <div className="bulletins-header">
+
+                  <div>
+
+                    <h2>
+                      📄 Mes bulletins
+                    </h2>
+
+                    <p>
+                      Retrouvez vos bulletins scolaires.
+                    </p>
+
+                  </div>
+
+                </div>
+
+                {bulletins.length === 0 ? (
+
+                  <div className="aucun-bulletin">
+
+                    <span>
+                      📄
+                    </span>
+
+                    <p>
+                      Aucun bulletin disponible
+                      pour le moment.
+                    </p>
+
+                  </div>
+
+                ) : (
+
+                  <div className="bulletins-list">
+
+                    {bulletins.map(
+                      (bulletin) => (
+
+                        <div
+                          className="bulletin-item"
+                          key={bulletin.id}
+                        >
+
+                          <div className="bulletin-icon">
+                            📄
+                          </div>
+
+                          <div className="bulletin-info">
+
+                            <h3>
+                              {bulletin.titre}
+                            </h3>
+
+                            <span>
+                              {bulletin.periode}
+                            </span>
+
+                          </div>
+
+                          <div className="bulletin-actions">
+
+                            <button
+                              type="button"
+                              onClick={() =>
+                                ouvrirBulletin(
+                                  bulletin.id
+                                )
+                              }
+                            >
+                              👁 Voir le PDF
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() =>
+                                telechargerBulletin(
+                                  bulletin.id,
+                                  bulletin.titre
+                                )
+                              }
+                            >
+                              ⬇ Télécharger
+                            </button>
+                          
+
+                          </div>
+
+                        </div>
+
+                      )
+                    )}
+
+                  </div>
+
+                )}
+                
+
+              </section>
+
+            </>
+          )}
+            <br /><br />
 
       </main>
 

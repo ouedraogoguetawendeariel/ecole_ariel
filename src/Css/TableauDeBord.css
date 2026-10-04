@@ -38,11 +38,15 @@
 }
 
 .profil-card {
-    background: white;
+    background: white ;
     padding: 25px;
     border-radius: 15px;
     margin-bottom: 30px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.mon {
+    background-color: white ;
 }
 
 .profil-card h2 {

@@ -1,0 +1,360 @@
+/* =========================================
+   GESTION DES ACTUALITÉS
+   ========================================= */
+
+.admin-actualites {
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.admin-actualites h1 {
+    margin-bottom: 8px;
+    font-size: 28px;
+    color: #25231f;
+}
+
+.admin-actualites .description {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* =========================================
+   EN-TÊTE
+   ========================================= */
+
+.actualites-header {
+    margin-bottom: 25px;
+}
+
+.actualites-header h1 {
+    color: #25231f;
+    margin-bottom: 8px;
+}
+
+.actualites-header p {
+    color: #666;
+    margin: 0;
+}
+
+/* =========================================
+   FORMULAIRE
+   ========================================= */
+
+.actualites-section {
+    background-color: #a7a296;
+    color: #25231f;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #8f8a80;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+.actualites-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #25231f;
+}
+
+/* =========================================
+   GRILLE DU FORMULAIRE
+   ========================================= */
+
+.actualites-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.actualites-form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.actualites-form .champ-complet {
+    grid-column: 1 / -1;
+}
+
+/* =========================================
+   LABELS
+   ========================================= */
+
+.actualites-form label {
+    font-weight: 600;
+    margin-bottom: 7px;
+    color: #25231f;
+}
+
+/* =========================================
+   CHAMPS
+   ========================================= */
+
+.actualites-form input,
+.actualites-form select,
+.actualites-form textarea {
+    padding: 11px 12px;
+    border: 1px solid #777268;
+    border-radius: 7px;
+    font-size: 15px;
+    outline: none;
+    background-color: #d1cdc4;
+    color: #25231f;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.actualites-form input::placeholder,
+.actualites-form textarea::placeholder {
+    color: #625e57;
+}
+
+.actualites-form input:focus,
+.actualites-form select:focus,
+.actualites-form textarea:focus {
+    border-color: #15324B;
+    background-color: #d8d4cc;
+}
+
+.actualites-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* =========================================
+   CHAMP PHOTOS
+   ========================================= */
+
+.actualites-form input[type="file"] {
+    cursor: pointer;
+}
+
+/* =========================================
+   INFORMATIONS PHOTOS
+   ========================================= */
+
+.photos-selection {
+    margin-top: 7px;
+    color: #625e57;
+    font-size: 14px;
+}
+
+/* =========================================
+   BOUTON PUBLIER
+   ========================================= */
+
+.btn-publier-actualite {
+    margin-top: 20px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 7px;
+    background: #15324B;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-publier-actualite:hover {
+    opacity: 0.9;
+}
+
+.btn-publier-actualite:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =========================================
+   MESSAGES
+   ========================================= */
+
+.actualite-message-succes {
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #a7a296;
+    border: 1px solid #8f8a80;
+    color: #25231f;
+    font-weight: 600;
+}
+
+.actualite-message-erreur {
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #a7a296;
+    border-left: 4px solid #8f2d2d;
+    color: #25231f;
+    font-weight: 600;
+}
+
+/* =========================================
+   LISTE DES ACTUALITÉS
+   ========================================= */
+
+.actualites-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* =========================================
+   CARTE ACTUALITÉ
+   ========================================= */
+
+.actualite-card {
+    background-color: #d1cdc4;
+    color: #25231f;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #8f8a80;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.actualite-card h3 {
+    margin: 10px 0;
+    color: #15324B;
+    font-size: 20px;
+}
+
+.actualite-card p {
+    margin: 0 0 15px;
+    color: #25231f;
+    line-height: 1.5;
+}
+
+/* =========================================
+   EN-TÊTE DE LA CARTE
+   ========================================= */
+
+.actualite-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.actualite-date {
+    color: #625e57;
+    font-size: 13px;
+}
+
+/* =========================================
+   BADGES
+   ========================================= */
+
+.badge-public,
+.badge-utilisateurs,
+.badge-categorie {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 7px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-public {
+    background-color: #15324B;
+    color: white;
+}
+
+.badge-utilisateurs {
+    background-color: #625e57;
+    color: white;
+}
+
+.badge-categorie {
+    background-color: #f5f7fa;
+    color: #25231f;
+}
+
+/* =========================================
+   INFORMATIONS ACTUALITÉ
+   ========================================= */
+
+.actualite-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #aaa49a;
+}
+
+.actualite-details span {
+    color: #625e57;
+    font-size: 14px;
+}
+
+/* =========================================
+   BOUTON SUPPRIMER
+   ========================================= */
+
+.btn-supprimer-actualite {
+    margin-top: 15px;
+    border: none;
+    border-radius: 7px;
+    padding: 10px 16px;
+    background: #8f2d2d;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-supprimer-actualite:hover {
+    opacity: 0.9;
+}
+
+/* =========================================
+   AUCUNE ACTUALITÉ
+   ========================================= */
+
+.aucune-actualite {
+    background-color: #a7a296;
+    color: #25231f;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 900px) {
+
+    .admin-actualites {
+        padding: 20px;
+    }
+
+    .actualites-form {
+        grid-template-columns: 1fr;
+    }
+
+    .actualites-form .champ-complet {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .admin-actualites {
+        padding: 15px;
+    }
+
+    .actualite-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .actualite-details {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn-publier-actualite,
+    .btn-supprimer-actualite {
+        width: 100%;
+    }
+}

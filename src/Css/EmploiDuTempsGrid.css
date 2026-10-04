@@ -1,0 +1,323 @@
+/* =========================================
+   EMPLOI DU TEMPS - ADMIN
+   ========================================= */
+
+/* FORMULAIRE D'AJOUT / MODIFICATION */
+.edt-form {
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #8f8a80;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    background-color: #a7a296;
+    color: #25231f;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.edt-form h2 {
+    color: #25231f;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.edt-form label {
+    display: block;
+    color: #25231f;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.edt-form input,
+.edt-form select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 15px;
+
+    border: 1px solid #777268;
+    border-radius: 6px;
+
+    background-color: #d1cdc4;
+    color: #25231f;
+
+    font-family: inherit;
+}
+
+.edt-form input:focus,
+.edt-form select:focus {
+    outline: none;
+    border-color: #15324B;
+}
+
+.edt-form input::placeholder {
+    color: #625e57;
+}
+
+/* BOUTONS DU FORMULAIRE */
+.edt-form-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.edt-form button {
+    background-color: #15324B;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.edt-form button:hover {
+    opacity: 0.9;
+}
+
+.edt-btn-annuler {
+    background-color: #8f2d2d !important;
+}
+
+/* =========================================
+   RECHERCHE D'UNE CLASSE
+   ========================================= */
+
+.edt-recherche {
+    max-width: 600px;
+    padding: 20px;
+    margin-bottom: 30px;
+
+    border: 1px solid #8f8a80;
+    border-radius: 10px;
+
+    background-color: #a7a296;
+    color: #25231f;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.edt-recherche h2 {
+    margin-top: 0;
+    color: #25231f;
+}
+
+.edt-recherche input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    border: 1px solid #777268;
+    border-radius: 6px;
+
+    background-color: #d1cdc4;
+    color: #25231f;
+}
+
+.edt-recherche input:focus {
+    outline: none;
+    border-color: #15324B;
+}
+
+/* =========================================
+   TITRE
+   ========================================= */
+
+.edt-titre {
+    color: #15324B;
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   MESSAGE
+   ========================================= */
+
+.edt-message {
+    margin: 15px 0;
+
+    padding: 10px;
+
+    border-radius: 5px;
+
+    background-color: #a7a296;
+    color: #25231f;
+
+    font-weight: bold;
+}
+
+/* =========================================
+   MESSAGE AUCUN CRÉNEAU
+   ========================================= */
+
+.edt-aucun {
+    padding: 20px;
+
+    border-radius: 10px;
+
+    background-color: #a7a296;
+    color: #25231f;
+}
+
+/* =========================================
+   GRILLE EMPLOI DU TEMPS
+   ========================================= */
+
+.edt-grille {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(140px, 1fr));
+    gap: 10px;
+
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* COLONNES DES JOURS */
+.edt-colonne {
+    min-height: 300px;
+
+    padding: 12px;
+
+    border: 1px solid #8f8a80;
+    border-radius: 10px;
+
+    background-color: #a7a296;
+    color: #25231f;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.edt-colonne h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+
+    padding: 10px;
+
+    border-radius: 7px;
+
+    background-color: #15324B;
+    color: white;
+
+    text-align: center;
+}
+
+/* =========================================
+   CRÉNEAUX
+   ========================================= */
+
+.edt-creneau {
+    padding: 12px;
+    margin-bottom: 10px;
+
+    border: 1px solid #8f8a80;
+    border-radius: 8px;
+
+    background-color: #d1cdc4;
+    color: #25231f;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.edt-creneau strong {
+    color: #15324B;
+}
+
+.edt-creneau p {
+    margin: 5px 0;
+    color: #25231f;
+}
+
+/* HEURE */
+.edt-heure {
+    font-weight: bold;
+    color: #15324B;
+}
+
+/* MATIÈRE */
+.edt-matiere {
+    font-weight: bold;
+    color: #25231f;
+}
+
+/* SALLE */
+.edt-salle {
+    color: #625e57;
+}
+
+/* =========================================
+   BOUTONS MODIFIER / SUPPRIMER
+   ========================================= */
+
+.edt-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.edt-actions button {
+    border: none;
+    padding: 8px 12px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+    color: white;
+}
+
+.edt-actions button:first-child {
+    background-color: #15324B;
+}
+
+.edt-actions button:last-child {
+    background-color: #8f2d2d;
+}
+
+.edt-actions button:hover {
+    opacity: 0.9;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1000px) {
+    .edt-grille {
+        grid-template-columns: repeat(4, minmax(180px, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+
+    .edt-form,
+    .edt-recherche {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .edt-form-buttons {
+        flex-direction: column;
+    }
+
+    .edt-form-buttons button {
+        width: 100%;
+    }
+
+    .edt-grille {
+        grid-template-columns: 1fr;
+    }
+
+    .edt-colonne {
+        min-height: auto;
+    }
+
+    .edt-actions {
+        flex-direction: column;
+    }
+
+    .edt-actions button {
+        width: 100%;
+    }
+}
+

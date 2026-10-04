@@ -1,0 +1,327 @@
+/* =========================================================
+   PAGE ADMINISTRATEURS
+========================================================= */
+
+.admin-administrateurs {
+    min-height: 100vh;
+    background: wheat;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CONTENEUR PRINCIPAL
+========================================================= */
+
+.admin-administrateurs-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   EN-TÊTE
+========================================================= */
+
+.admin-administrateurs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.admin-administrateurs-header h1 {
+    margin: 0;
+    color: #15324B;
+    font-size: 30px;
+}
+
+.admin-administrateurs-header p {
+    margin: 8px 0 0;
+    color: #666;
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   BOUTON RETOUR
+========================================================= */
+
+.admin-retour-btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #15324B;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.admin-retour-btn:hover {
+    background: #1d4668;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MESSAGES
+========================================================= */
+
+.admin-message-erreur {
+    background: #fdecec;
+    color: #b42318;
+    padding: 14px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #c62828;
+}
+
+.admin-message-succes {
+    background: #eaf7ee;
+    color: #18794e;
+    padding: 14px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #2e8b57;
+}
+
+
+/* =========================================================
+   CARTES
+========================================================= */
+
+.admin-admin-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.admin-admin-card h2 {
+    margin-top: 0;
+    margin-bottom: 22px;
+    color: #15324B;
+    font-size: 22px;
+}
+
+
+/* =========================================================
+   FORMULAIRE
+========================================================= */
+
+.admin-admin-form {
+    width: 100%;
+}
+
+.admin-admin-form-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(220px, 1fr)
+    );
+    gap: 18px;
+}
+
+.admin-form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-form-group label {
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.admin-form-group input {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.admin-form-group input:focus {
+    border-color: #15324B;
+    box-shadow: 0 0 0 2px rgba(21, 50, 75, 0.1);
+}
+
+
+/* =========================================================
+   BOUTON CRÉER
+========================================================= */
+
+.admin-creer-btn {
+    margin-top: 22px;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 8px;
+    background: #15324B;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.admin-creer-btn:hover:not(:disabled) {
+    background: #1d4668;
+    transform: translateY(-1px);
+}
+
+.admin-creer-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   TABLEAU
+========================================================= */
+
+.admin-table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-admin-table th {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 2px solid #eee;
+    color: #15324B;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.admin-admin-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    color: #444;
+    font-size: 14px;
+}
+
+.admin-admin-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+
+/* =========================================================
+   BADGES DES RÔLES
+========================================================= */
+
+.admin-role-principal {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #e7f0f8;
+    color: #15324B;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.admin-role-secondaire {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #f1f1f1;
+    color: #555;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   BOUTON SUPPRIMER
+========================================================= */
+
+.admin-supprimer-btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #c62828;
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s ease;
+}
+
+.admin-supprimer-btn:hover {
+    background: #a51f1f;
+}
+
+
+/* =========================================================
+   ADMIN PRINCIPAL
+========================================================= */
+
+.admin-compte-principal {
+    color: #18794e;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   CHARGEMENT / VIDE
+========================================================= */
+
+.admin-chargement,
+.admin-liste-vide {
+    padding: 20px 0;
+    color: #666;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .admin-administrateurs {
+        padding: 18px;
+    }
+
+    .admin-administrateurs-header {
+        align-items: flex-start;
+    }
+
+    .admin-administrateurs-header h1 {
+        font-size: 24px;
+    }
+
+    .admin-retour-btn {
+        width: 100%;
+    }
+
+    .admin-admin-card {
+        padding: 18px;
+    }
+
+    .admin-admin-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-creer-btn {
+        width: 100%;
+    }
+
+    .admin-admin-table th,
+    .admin-admin-table td {
+        padding: 10px 8px;
+    }
+}

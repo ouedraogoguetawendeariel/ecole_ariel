@@ -1,6 +1,6 @@
 .admin-notes {
     min-height: 100vh;
-    background: #f4f6f8;
+    background: wheat;
 }
 
 .admin-notes-header {
@@ -39,7 +39,7 @@
 
 .note-form-card,
 .notes-list-card {
-    background: white;
+    background: #a7a296;
     padding: 30px;
     border-radius: 12px;
     margin-bottom: 30px;
@@ -101,7 +101,7 @@
 .message-erreur,
 .message-succes,
 .aucune-note {
-    background: white;
+    background: #a7a296;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -215,4 +215,20 @@ tr:hover {
   background: #fafafa;
   border-radius: 10px;
   margin-bottom: 20px;
+}
+
+.btn-supprimer {
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-supprimer:hover {
+  background-color: #dc2626;
 }

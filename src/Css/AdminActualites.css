@@ -1,0 +1,269 @@
+.admin-actualites {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 30px;
+    min-height: 80vh;
+}
+
+.actualites-section {
+    background: #a7a296;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.actualites-section h2 {
+    color: #15324B;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 12px;
+}
+
+.actualites-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.actualites-form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.champ-complet {
+    grid-column: 1 / -1;
+}
+
+.actualites-form label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.actualites-form input,
+.actualites-form select,
+.actualites-form textarea {
+    padding: 12px;
+    border: 1px solid #8f8a80;
+    border-radius: 7px;
+    font-size: 16px;
+    outline: none;
+    background: #d1cdc4;
+    color: #222;
+    font-family: inherit;
+}
+
+.actualites-form input:focus,
+.actualites-form select:focus,
+.actualites-form textarea:focus {
+    border-color: #15324B;
+}
+
+.actualites-form textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.actualites-form input[type="file"] {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.actualites-form small {
+    margin-top: 6px;
+    color: #555;
+}
+
+.btn-publier-actualite {
+    grid-column: 1 / -1;
+    display: block;
+    margin: 10px auto 0;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    background: #15324B;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-publier-actualite:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.btn-publier-actualite:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Messages */
+
+.actualite-message {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.actualite-message.succes {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #b7dfc1;
+}
+
+.actualite-message.erreur {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f1b8bd;
+}
+
+/* Liste des actualités */
+
+.actualites-liste {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.actualite-card {
+    background: #d1cdc4;
+    border: 1px solid #8f8a80;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.actualite-card h3 {
+    color: #15324B;
+    margin: 10px 0;
+    font-size: 21px;
+}
+
+.actualite-card p {
+    color: #333;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.actualite-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.badge-actualite {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #15324B;
+    color: white;
+}
+
+.badge-public {
+    background: #15324B;
+}
+
+.badge-utilisateur {
+    background: #5c4b3e;
+}
+
+.badge-classe {
+    background: #6d6257;
+}
+
+.badge-eleve {
+    background: #806f5b;
+}
+
+.actualite-date {
+    color: #666;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.actualite-periode {
+    margin-top: 10px;
+    font-weight: 600;
+    color: #15324B;
+}
+
+.actualite-photos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.actualite-photos img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #8f8a80;
+}
+
+.btn-supprimer-actualite {
+    margin-top: 18px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 7px;
+    background: #8b2e2e;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-supprimer-actualite:hover {
+    background: #702424;
+}
+
+/* Aucun résultat */
+
+.actualites-vide {
+    text-align: center;
+    padding: 30px;
+    color: #555;
+    font-style: italic;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+    .actualites-form,
+    .actualites-liste {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-actualites {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-actualites {
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .actualites-section {
+        padding: 18px;
+    }
+
+    .actualite-photos {
+        grid-template-columns: 1fr;
+    }
+}
+
+.admin-actualites {
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}

@@ -1,4 +1,5 @@
 import { Navigate } from 'react-router-dom';
+import '/src/Css/AdminTheme.css';
 
 interface Props {
     children: React.ReactNode;
@@ -17,5 +18,10 @@ export default function RouteAdmin({ children }: Props) {
         return <Navigate to="/tableau-de-bord" replace />;
     }
 
-    return <>{children}</>;
+    return (
+        <div className="admin-theme">
+            {children}
+        </div>
+    );
 }
+

@@ -1,0 +1,276 @@
+.actualites-user-page {
+  min-height: 100vh;
+  background: wheat;
+}
+
+/* =========================================
+   EN-TÊTE
+========================================= */
+
+.actualites-user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 40px;
+  background: #15324B;
+  color: white;
+}
+
+.actualites-user-header h1 {
+  margin: 0 0 5px;
+}
+
+.actualites-user-header p {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.actualites-user-header span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  opacity: 0.8;
+  letter-spacing: 1px;
+}
+
+.actualites-user-header button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: white;
+  color: #15324B;
+  font-size: 15px;
+}
+
+/* =========================================
+   CONTENU
+========================================= */
+
+.actualites-user-section {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+/* =========================================
+   TITRE DE SECTION
+========================================= */
+
+.actualites-user-title {
+  background: #a7a296;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+
+.actualites-user-title h2 {
+  margin: 0 0 8px;
+  color: #15324B;
+}
+
+.actualites-user-title p {
+  margin: 0;
+  color: #555;
+}
+
+/* =========================================
+   LISTE DES ACTUALITÉS
+========================================= */
+
+.actualites-user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* =========================================
+   CARTE ACTUALITÉ
+========================================= */
+
+.actualite-user-card {
+  background: #a7a296;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================
+   HAUT DE LA CARTE
+========================================= */
+
+.actualite-user-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.actualite-user-tag {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #15324B;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.actualite-user-date {
+  color: #666;
+  font-size: 14px;
+}
+
+/* =========================================
+   TITRE
+========================================= */
+
+.actualite-user-card h3 {
+  margin: 0 0 12px;
+  color: #15324B;
+  font-size: 21px;
+}
+
+/* =========================================
+   CONTENU
+========================================= */
+
+.actualite-user-card > p {
+  margin: 0 0 15px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* =========================================
+   INFORMATIONS
+========================================= */
+
+.actualite-user-info {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: white;
+  border-radius: 6px;
+  color: #555;
+}
+
+.actualite-user-info strong {
+  color: #15324B;
+}
+
+/* =========================================
+   PHOTOS
+========================================= */
+
+.actualite-user-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.actualite-user-photos img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* =========================================
+   BOUTON DOCUMENT
+========================================= */
+
+.actualite-user-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 16px;
+  background: #15324B;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.actualite-user-button:hover {
+  opacity: 0.9;
+}
+
+/* =========================================
+   CHARGEMENT
+========================================= */
+
+.actualites-user-loading {
+  background: #a7a296;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  color: #555;
+}
+
+/* =========================================
+   ERREUR
+========================================= */
+
+.actualites-user-error {
+  padding: 15px;
+  background: #ffe5e5;
+  color: #b00020;
+  border-radius: 8px;
+}
+
+/* =========================================
+   AUCUNE ACTUALITÉ
+========================================= */
+
+.actualites-user-empty {
+  background: #a7a296;
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  color: #777;
+}
+
+.actualites-user-empty div {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.actualites-user-empty h3 {
+  margin: 0 0 8px;
+  color: #15324B;
+}
+
+.actualites-user-empty p {
+  margin: 0;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .actualites-user-header {
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .actualites-user-section {
+    padding: 0 15px;
+  }
+
+  .actualite-user-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actualites-user-photos {
+    grid-template-columns: 1fr;
+  }
+
+  .actualite-user-photos img {
+    height: 220px;
+  }
+}

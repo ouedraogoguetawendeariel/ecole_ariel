@@ -1,25 +1,53 @@
+/* =========================================
+   NAVBAR
+========================================= */
+
 .menu {
     background-color: #0f2436;
     font-size: 1.2em;
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+
     row-gap: 15px;
+
     padding: 20px 60px;
+
     box-sizing: border-box;
-    font-family: 'roboto';
+
+    font-family: 'Roboto', Arial, sans-serif;
+
+    position: relative;
+    z-index: 100;
+
+    /* Animation d'apparition */
+    animation: navbarApparition 0.7s ease-out;
 }
 
-.menu ul {
-    display: flex;
-    flex-direction: row;
-    list-style: none;
-    gap: 40px;
-    margin: 0;
-    padding: 0;
+
+/* =========================================
+   ANIMATION APPARITION NAVBAR
+========================================= */
+
+@keyframes navbarApparition {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
+
+/* =========================================
+   MARQUE / LOGO
+========================================= */
 
 .brand {
     display: flex;
@@ -27,67 +55,519 @@
     gap: 15px;
 }
 
+
+/* Lien du logo */
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+
+    transition:
+        transform 0.35s ease,
+        background-color 0.35s ease;
+}
+
+
+/* Animation du logo */
+
+.brand-logo:hover {
+    transform: scale(1.12) rotate(-4deg);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+
 .brand img {
     width: 40px;
     height: 40px;
+
     object-fit: contain;
+
+    transition:
+        transform 0.35s ease,
+        filter 0.35s ease;
 }
+
+
+.brand-logo:hover img {
+    transform: scale(1.08);
+}
+
+
+/* Nom de l'école */
 
 .brand span {
     font-size: 0.8em;
+
     font-weight: bold;
+
     font-family: Arial, Helvetica, sans-serif;
+
     color: white;
+
+    line-height: 1.3;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
 }
 
 
-a {
+.brand:hover span {
+    transform: translateX(3px);
+}
+
+
+/* =========================================
+   LISTE DES LIENS
+========================================= */
+
+.menu ul {
+    display: flex;
+
+    flex-direction: row;
+
+    list-style: none;
+
+    gap: 40px;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================
+   LIENS
+========================================= */
+
+.menu li {
+    display: flex;
+    align-items: center;
+}
+
+
+.menu li a {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
     text-decoration: none;
+
     color: white;
+
+    padding: 8px 2px;
+
+    font-size: 0.9em;
+
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
 }
 
-.activeLink {
-    font-weight: bold;
-    color: black;
+
+/* =========================================
+   EFFET AU SURVOL
+========================================= */
+
+.menu li a:hover {
+    color: wheat;
+    transform: translateY(-3px);
 }
+
+
+/* =========================================
+   SOULIGNEMENT ANIMÉ
+========================================= */
+
+.menu li a::after {
+    content: '';
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 0;
+    height: 3px;
+
+    border-radius: 10px;
+
+    background-color: white;
+
+    transition:
+        width 0.3s ease;
+}
+
+
+/* Quand la souris passe */
+
+.menu li a:hover::after {
+    width: 100%;
+}
+
+
+/* =========================================
+   LIEN ACTIF
+========================================= */
+
+.menu li a.activeLink {
+    font-weight: bold;
+    color: #176b5b;
+}
+
+
+/* Soulignement du lien actif */
+
+.menu li a.activeLink::after {
+    width: 100%;
+    background-color: #176b5b;
+}
+
+
+/* Soulignement du lien actif */
+
+.menu li a.activeLink::after {
+    width: 100%;
+}
+
+
+/* =========================================
+   ANIMATION DES LIENS AU CHARGEMENT
+========================================= */
+
+.menu-liste li {
+    animation: lienApparition 0.5s ease both;
+}
+
+
+.menu-liste li:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.menu-liste li:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.menu-liste li:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.menu-liste li:nth-child(4) {
+    animation-delay: 0.25s;
+}
+
+.menu-liste li:nth-child(5) {
+    animation-delay: 0.3s;
+}
+
+.menu-liste li:nth-child(6) {
+    animation-delay: 0.35s;
+}
+
+
+@keyframes lienApparition {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================
+   ICÔNE UTILISATEUR
+========================================= */
+
+.menu-utilisateur a {
+    width: 38px;
+    height: 38px;
+
+    padding: 0 !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+
+    border-radius: 50%;
+
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+.menu-utilisateur a:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+
+    border-color: white;
+
+    transform: scale(1.12) translateY(-2px) !important;
+}
+
+
+/* Pas de ligne sous l'icône utilisateur */
+
+.menu-utilisateur a::after {
+    display: none;
+}
+
+
+/* =========================================
+   BOUTON BURGER
+========================================= */
 
 .menu-burger {
     display: none;
+
     background: none;
+
     border: none;
+
     color: white;
+
     cursor: pointer;
+
+    width: 44px;
+    height: 44px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
 }
 
+
+.menu-burger:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+
+    transform: scale(1.05);
+}
+
+
+.menu-burger:active {
+    transform: scale(0.92);
+}
+
+
+/* Animation du bouton lorsque le menu est ouvert */
+
+.burger-ouvert {
+    transform: rotate(90deg);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
 @media (max-width: 768px) {
+
     .menu {
         flex-wrap: nowrap;
+
         position: relative;
+
+        padding: 15px 20px;
     }
+
+
+    /* =====================================
+       BURGER
+    ===================================== */
 
     .menu-burger {
-        display: block;
-    }
-
-        .menu .menu-liste {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        background-color: #0f2436;
-        padding: 16px 24px;
-        gap: 16px;
-        z-index: 50;
-    }
-
-    .menu .menu-liste-ouverte {
         display: flex;
     }
-    
+
+
+    /* =====================================
+       MENU MOBILE
+    ===================================== */
+
+    .menu .menu-liste {
+
+        position: absolute;
+
+        top: 100%;
+
+        left: 0;
+        right: 0;
+
+        display: flex;
+
+        flex-direction: column;
+
+        background-color: #0f2436;
+
+        padding: 0 24px;
+
+        gap: 0;
+
+        z-index: 50;
+
+        list-style: none;
+
+        margin: 0;
+
+        /* Animation */
+        max-height: 0;
+
+        overflow: hidden;
+
+        opacity: 0;
+
+        transform: translateY(-10px);
+
+        pointer-events: none;
+
+        transition:
+            max-height 0.4s ease,
+            opacity 0.3s ease,
+            transform 0.3s ease,
+            padding 0.3s ease;
+    }
+
+
+    /* Menu ouvert */
+
+    .menu .menu-liste-ouverte {
+
+        max-height: 500px;
+
+        padding: 16px 24px;
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+        pointer-events: auto;
+    }
+
+
+    /* =====================================
+       LIENS MOBILE
+    ===================================== */
+
+    .menu .menu-liste li {
+
+        width: 100%;
+
+        opacity: 1;
+
+        transform: none;
+
+        animation: none;
+    }
+
+
+    .menu .menu-liste li a {
+
+        width: 100%;
+
+        justify-content: flex-start;
+
+        padding: 13px 5px;
+
+        border-radius: 6px;
+
+        transition:
+            background-color 0.3s ease,
+            padding-left 0.3s ease,
+            color 0.3s ease;
+    }
+
+
+    .menu .menu-liste li a:hover {
+
+        background-color: rgba(255, 255, 255, 0.08);
+
+        padding-left: 12px;
+
+        transform: none;
+    }
+
+
+    /* Soulignement désactivé sur mobile */
+
+    .menu .menu-liste li a::after {
+        display: none;
+    }
+
+
+    /* =====================================
+       UTILISATEUR MOBILE
+    ===================================== */
+
+    .menu .menu-utilisateur a {
+
+        width: 42px;
+
+        height: 42px;
+
+        justify-content: center;
+
+        margin-top: 5px;
+    }
+
+
+    /* =====================================
+       NOM DE L'ÉCOLE
+    ===================================== */
 
     .brand span {
         display: none;
+    }
+
+
+    /* =====================================
+       LOGO MOBILE
+    ===================================== */
+
+    .brand img {
+
+        width: 38px;
+
+        height: 38px;
+    }
+}
+
+
+/* =========================================
+   PETITS ÉCRANS
+========================================= */
+
+@media (max-width: 400px) {
+
+    .menu {
+        padding: 13px 15px;
+    }
+
+
+    .brand img {
+        width: 36px;
+        height: 36px;
+    }
+
+
+    .menu-burger {
+        width: 40px;
+        height: 40px;
     }
 }

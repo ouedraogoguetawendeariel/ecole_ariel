@@ -1,6 +1,6 @@
 .resultats-page {
   min-height: 100vh;
-  background: #f5f7fa;
+  background: wheat;
 }
 
 .resultats-header {
@@ -59,7 +59,7 @@
 }
 
 .resultats-filtres {
-  background: white;
+  background: #a7a296;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 25px;
@@ -79,7 +79,7 @@
 }
 
 .resultats-card {
-  background: white;
+  background: #a7a296;
   padding: 25px;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -110,7 +110,7 @@
 .moyenne-card {
   margin-top: 25px;
   padding: 25px;
-  background: white;
+  background: #a7a296;
   border-radius: 10px;
   display: flex;
   justify-content: space-between;
@@ -197,7 +197,7 @@
 
 .bulletins-card {
     margin-top: 25px;
-    background: white;
+    background: #a7a296;
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -309,4 +309,10 @@
         flex: 1;
         text-align: center;
     }
+}
+
+/* Bande du bulletin PDF */
+.bulletin-item {
+  background: #ffffff;
+  color: #222222;
 }

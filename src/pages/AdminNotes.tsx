@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../Css/AdminNotes.css';
+import '../Css/AdminTheme.css';
+import AdminHeader from '../components/AdminHeader';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface Eleve {
   id: number;
   prenom: string;
   nom: string;
-  classe: string;
+  classe: string | null;
 }
 
 interface Note {
@@ -24,8 +25,6 @@ interface Note {
 }
 
 export default function AdminNotes() {
-  const navigate = useNavigate();
-
   const [eleves, setEleves] = useState<Eleve[]>([]);
   const [notes, setNotes] = useState<Note[]>([]);
   const [classes, setClasses] = useState<string[]>([]);
@@ -35,24 +34,38 @@ export default function AdminNotes() {
   const [coefficient, setCoefficient] = useState('1');
   const [trimestre, setTrimestre] = useState('Trimestre 1');
 
-  const [notesSaisies, setNotesSaisies] =
-    useState<Record<number, string>>({});
+  const [notesSaisies, setNotesSaisies] = useState<Record<number, string>>({});
+  const [noteEnCoursModification, setNoteEnCoursModification] = useState<Note | null>(null);
 
   const [chargement, setChargement] = useState(true);
   const [enregistrement, setEnregistrement] = useState(false);
   const [erreur, setErreur] = useState('');
   const [message, setMessage] = useState('');
 
-  /* =====================================================
-     Chargement des données
-  ===================================================== */
+  // =====================================================
+  // NORMALISER UNE CLASSE
+  // =====================================================
+  const normaliserClasse = (classe: string | null | undefined) => {
+    return (classe || '').trim().toLowerCase();
+  };
 
+  // =====================================================
+  // CHARGER LES DONNÉES
+  // =====================================================
   useEffect(() => {
     const chargerDonnees = async () => {
       try {
+        setChargement(true);
+        setErreur('');
+
         const token = localStorage.getItem('token');
 
-        const [resEleves, resNotes, resClasses] = await Promise.all([
+        if (!token) {
+          setErreur('Vous devez être connecté pour accéder aux notes.');
+          return;
+        }
+
+        const [resEleves, resNotes] = await Promise.all([
           fetch(`${API_URL}/api/admin/eleves`, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -64,22 +77,15 @@ export default function AdminNotes() {
               Authorization: `Bearer ${token}`,
             },
           }),
-
-          fetch(`${API_URL}/api/admin/classes`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
         ]);
 
         const dataEleves = await resEleves.json();
         const dataNotes = await resNotes.json();
-        const dataClasses = await resClasses.json();
 
         if (!resEleves.ok) {
           setErreur(
             dataEleves.message ||
-            'Impossible de récupérer les élèves.'
+              'Impossible de récupérer les élèves.'
           );
           return;
         }
@@ -87,25 +93,34 @@ export default function AdminNotes() {
         if (!resNotes.ok) {
           setErreur(
             dataNotes.message ||
-            'Impossible de récupérer les notes.'
+              'Impossible de récupérer les notes.'
           );
           return;
         }
 
-        if (!resClasses.ok) {
-          setErreur(
-            dataClasses.message ||
-            'Impossible de récupérer les classes.'
-          );
-          return;
-        }
+        const listeEleves: Eleve[] = dataEleves.eleves || [];
 
-        setEleves(dataEleves.eleves || []);
+        setEleves(listeEleves);
         setNotes(dataNotes.notes || []);
-        setClasses(dataClasses.classes || []);
 
-      } catch {
-        setErreur('Impossible de contacter le serveur.');
+        const classesUniques = Array.from(
+          new Set(
+            listeEleves
+              .map((eleve) => eleve.classe?.trim())
+              .filter(
+                (classe): classe is string =>
+                  Boolean(classe && classe.trim() !== '')
+              )
+          )
+        ).sort((a, b) => a.localeCompare(b));
+
+        setClasses(classesUniques);
+      } catch (error) {
+        console.error('Erreur chargement notes :', error);
+
+        setErreur(
+          'Impossible de contacter le serveur.'
+        );
       } finally {
         setChargement(false);
       }
@@ -114,28 +129,131 @@ export default function AdminNotes() {
     chargerDonnees();
   }, []);
 
-  /* =====================================================
-     Élèves de la classe sélectionnée
-  ===================================================== */
+  // =====================================================
+  // ÉLÈVES DE LA CLASSE SÉLECTIONNÉE
+  // =====================================================
 
-  const elevesDeLaClasse = eleves.filter(
-    (eleve) => eleve.classe === classeSelectionnee
-  );
+  const elevesDeLaClasse = eleves.filter((eleve) => {
+    return (
+      normaliserClasse(eleve.classe) ===
+      normaliserClasse(classeSelectionnee)
+    );
+  });
 
-  /* =====================================================
-     Modifier une note
-  ===================================================== */
+  // =====================================================
+  // MODIFIER UNE NOTE (SAISIE CLASSE)
+  // =====================================================
 
-  const modifierNote = (eleveId: number, valeur: string) => {
-    setNotesSaisies((anciennesNotes) => ({
-      ...anciennesNotes,
+  const modifierNote = (
+    eleveId: number,
+    valeur: string
+  ) => {
+    setNotesSaisies((anciennes) => ({
+      ...anciennes,
       [eleveId]: valeur,
     }));
   };
 
-  /* =====================================================
-     Enregistrer toutes les notes
-  ===================================================== */
+  // =====================================================
+  // SUPPRIMER UNE NOTE
+  // =====================================================
+
+  const supprimerNote = async (idNote: number) => {
+    if (!window.confirm('Voulez-vous vraiment supprimer cette note ?')) {
+      return;
+    }
+
+    try {
+      setErreur('');
+      setMessage('');
+
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${API_URL}/api/notes/${idNote}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErreur(data.message || 'Impossible de supprimer la note.');
+        return;
+      }
+
+      setNotes((notesActuelles) => notesActuelles.filter((n) => n.id !== idNote));
+      setMessage('Note supprimée avec succès.');
+    } catch (error) {
+      console.error('Erreur suppression note :', error);
+      setErreur('Impossible de contacter le serveur.');
+    }
+  };
+
+  // =====================================================
+  // ENREGISTRER LA MODIFICATION D'UNE NOTE (PUT)
+  // =====================================================
+
+  const handleModifierNoteSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!noteEnCoursModification) return;
+
+    try {
+      setErreur('');
+      setMessage('');
+
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${API_URL}/api/notes/${noteEnCoursModification.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          matiere: noteEnCoursModification.matiere,
+          note: noteEnCoursModification.note,
+          coefficient: noteEnCoursModification.coefficient,
+          trimestre: noteEnCoursModification.trimestre,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErreur(data.message || 'Impossible de modifier la note.');
+        return;
+      }
+
+      setNotes((notesActuelles) =>
+        notesActuelles.map((n) => (n.id === noteEnCoursModification.id ? data.note : n))
+      );
+
+      setMessage('Note modifiée avec succès.');
+      setNoteEnCoursModification(null);
+    } catch (error) {
+      console.error('Erreur modification note :', error);
+      setErreur('Impossible de contacter le serveur.');
+    }
+  };
+
+  // =====================================================
+  // CHANGER DE CLASSE
+  // =====================================================
+
+  const handleClasseChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const nouvelleClasse = e.target.value;
+
+    setClasseSelectionnee(nouvelleClasse);
+    setNotesSaisies({});
+    setMessage('');
+    setErreur('');
+  };
+
+  // =====================================================
+  // ENREGISTRER LES NOTES
+  // =====================================================
 
   const handleEnregistrerNotes = async (
     e: React.FormEvent
@@ -146,19 +264,28 @@ export default function AdminNotes() {
     setMessage('');
 
     if (!classeSelectionnee) {
-      setErreur('Veuillez sélectionner une classe.');
+      setErreur(
+        'Veuillez sélectionner une classe.'
+      );
       return;
     }
 
     if (!matiere.trim()) {
-      setErreur('Veuillez saisir la matière.');
+      setErreur(
+        'Veuillez saisir la matière.'
+      );
       return;
     }
 
     const coefficientNumber = Number(coefficient);
 
-    if (!coefficientNumber || coefficientNumber <= 0) {
-      setErreur('Le coefficient doit être supérieur à 0.');
+    if (
+      !coefficientNumber ||
+      coefficientNumber <= 0
+    ) {
+      setErreur(
+        'Le coefficient doit être supérieur à 0.'
+      );
       return;
     }
 
@@ -180,7 +307,6 @@ export default function AdminNotes() {
       return;
     }
 
-    // Vérification des notes
     for (const item of notesAEnregistrer) {
       if (
         !Number.isFinite(item.note) ||
@@ -192,7 +318,9 @@ export default function AdminNotes() {
         );
 
         setErreur(
-          `La note de ${eleve?.prenom || ''} ${eleve?.nom || ''} doit être comprise entre 0 et 20.`
+          `La note de ${eleve?.prenom || ''} ${
+            eleve?.nom || ''
+          } doit être comprise entre 0 et 20.`
         );
 
         return;
@@ -208,10 +336,12 @@ export default function AdminNotes() {
         `${API_URL}/api/notes/classe`,
         {
           method: 'POST',
+
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
+
           body: JSON.stringify({
             classe: classeSelectionnee,
             matiere: matiere.trim(),
@@ -227,17 +357,16 @@ export default function AdminNotes() {
       if (!res.ok) {
         setErreur(
           data.message ||
-          'Impossible d’enregistrer les notes.'
+            'Impossible d’enregistrer les notes.'
         );
         return;
       }
 
       setMessage(
         data.message ||
-        'Notes enregistrées avec succès.'
+          'Notes enregistrées avec succès.'
       );
 
-      // Recharger les notes
       const resNotes = await fetch(
         `${API_URL}/api/notes`,
         {
@@ -253,53 +382,33 @@ export default function AdminNotes() {
         setNotes(dataNotes.notes || []);
       }
 
-      // Vider les champs de notes
       setNotesSaisies({});
+    } catch (error) {
+      console.error(
+        'Erreur enregistrement notes :',
+        error
+      );
 
-    } catch {
-      setErreur('Impossible de contacter le serveur.');
+      setErreur(
+        'Impossible de contacter le serveur.'
+      );
     } finally {
       setEnregistrement(false);
     }
   };
 
-  /* =====================================================
-     Changement de classe
-  ===================================================== */
-
-  const handleClasseChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setClasseSelectionnee(e.target.value);
-    setNotesSaisies({});
-    setMessage('');
-    setErreur('');
-  };
-
-  /* =====================================================
-     Affichage
-  ===================================================== */
+  // =====================================================
+  // AFFICHAGE
+  // =====================================================
 
   return (
-    <div className="admin-notes">
+    <div className="admin-eleves">
+      <AdminHeader
+        titre="Gestion des notes"
+        sousTitre="Saisissez les notes de toute une classe."
+      />
 
-      <header className="admin-notes-header">
-        <div>
-          <h1>Gestion des notes</h1>
-
-          <p>
-            Saisissez les notes de toute une classe.
-          </p>
-        </div>
-
-        <button
-          onClick={() => navigate('/admin')}
-        >
-          ← Retour
-        </button>
-      </header>
-
-      <main className="admin-notes-content">
+      <main className="admin-eleves-content">
 
         {chargement && (
           <p>Chargement des données...</p>
@@ -319,33 +428,23 @@ export default function AdminNotes() {
 
         {!chargement && (
           <>
-            {/* =================================================
-                FORMULAIRE
-            ================================================= */}
-
+            {/* FORMULAIRE DE SAISIE */}
             <section className="note-form-card">
 
-              <h2>
-                Saisie des notes
-              </h2>
+              <h2>Saisie des notes</h2>
 
-              <form
-                onSubmit={handleEnregistrerNotes}
-              >
-
-                {/* Classe */}
+              <form onSubmit={handleEnregistrerNotes}>
 
                 <div className="form-group">
-
-                  <label>
+                  <label htmlFor="classe">
                     Classe
                   </label>
 
                   <select
+                    id="classe"
                     value={classeSelectionnee}
                     onChange={handleClasseChange}
                   >
-
                     <option value="">
                       -- Sélectionner une classe --
                     </option>
@@ -358,21 +457,16 @@ export default function AdminNotes() {
                         {classe}
                       </option>
                     ))}
-
                   </select>
-
                 </div>
 
-
-                {/* Matière */}
-
                 <div className="form-group">
-
-                  <label>
+                  <label htmlFor="matiere">
                     Matière
                   </label>
 
                   <input
+                    id="matiere"
                     type="text"
                     value={matiere}
                     onChange={(e) =>
@@ -380,27 +474,22 @@ export default function AdminNotes() {
                     }
                     placeholder="Exemple : Mathématiques"
                   />
-
                 </div>
-
-
-                {/* Trimestre + coefficient */}
 
                 <div className="form-row">
 
                   <div className="form-group">
-
-                    <label>
+                    <label htmlFor="trimestre">
                       Trimestre
                     </label>
 
                     <select
+                      id="trimestre"
                       value={trimestre}
                       onChange={(e) =>
                         setTrimestre(e.target.value)
                       }
                     >
-
                       <option value="Trimestre 1">
                         Trimestre 1
                       </option>
@@ -412,19 +501,16 @@ export default function AdminNotes() {
                       <option value="Trimestre 3">
                         Trimestre 3
                       </option>
-
                     </select>
-
                   </div>
 
-
                   <div className="form-group">
-
-                    <label>
+                    <label htmlFor="coefficient">
                       Coefficient
                     </label>
 
                     <input
+                      id="coefficient"
                       type="number"
                       min="0.1"
                       step="0.1"
@@ -433,30 +519,23 @@ export default function AdminNotes() {
                         setCoefficient(e.target.value)
                       }
                     />
-
                   </div>
 
                 </div>
 
-
-                {/* =================================================
-                    LISTE DES ÉLÈVES
-                ================================================= */}
-
                 {classeSelectionnee && (
-
                   <div className="saisie-classe">
 
                     <h3>
-                      Élèves de la classe :
-                      {' '}
+                      Élèves de la classe :{' '}
                       {classeSelectionnee}
                     </h3>
 
                     {elevesDeLaClasse.length === 0 ? (
 
                       <div className="classe-vide">
-                        Aucun élève trouvé dans cette classe.
+                        Aucun élève trouvé dans cette
+                        classe.
                       </div>
 
                     ) : (
@@ -466,13 +545,11 @@ export default function AdminNotes() {
                         <table>
 
                           <thead>
-
                             <tr>
                               <th>#</th>
                               <th>Élève</th>
                               <th>Note / 20</th>
                             </tr>
-
                           </thead>
 
                           <tbody>
@@ -531,11 +608,7 @@ export default function AdminNotes() {
                     )}
 
                   </div>
-
                 )}
-
-
-                {/* Bouton */}
 
                 {classeSelectionnee &&
                   elevesDeLaClasse.length > 0 && (
@@ -545,11 +618,9 @@ export default function AdminNotes() {
                       className="btn-enregistrer"
                       disabled={enregistrement}
                     >
-
                       {enregistrement
                         ? 'Enregistrement...'
                         : 'Enregistrer les notes'}
-
                     </button>
 
                   )}
@@ -558,16 +629,70 @@ export default function AdminNotes() {
 
             </section>
 
-
-            {/* =================================================
-                NOTES EXISTANTES
-            ================================================= */}
-
+            {/* NOTES DÉJÀ ENREGISTRÉES */}
             <section className="notes-list-card">
 
-              <h2>
-                Notes enregistrées
-              </h2>
+              <h2>Notes enregistrées</h2>
+
+              {noteEnCoursModification && (
+                <form onSubmit={handleModifierNoteSubmit} style={{ marginBottom: '20px', padding: '15px', background: '#f9f9f9', border: '1px solid #ddd', borderRadius: '6px' }}>
+                  <h3>Modifier la note de {noteEnCoursModification.prenom} {noteEnCoursModification.nom}</h3>
+                  
+                  <div className="form-group" style={{ marginBottom: '10px' }}>
+                    <label>Matière</label>
+                    <input
+                      type="text"
+                      value={noteEnCoursModification.matiere}
+                      onChange={(e) => setNoteEnCoursModification({ ...noteEnCoursModification, matiere: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-row" style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+                    <div className="form-group" style={{ flex: 1 }}>
+                      <label>Note / 20</label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="20"
+                        step="0.01"
+                        value={noteEnCoursModification.note}
+                        onChange={(e) => setNoteEnCoursModification({ ...noteEnCoursModification, note: Number(e.target.value) })}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group" style={{ flex: 1 }}>
+                      <label>Coefficient</label>
+                      <input
+                        type="number"
+                        min="0.1"
+                        step="0.1"
+                        value={noteEnCoursModification.coefficient}
+                        onChange={(e) => setNoteEnCoursModification({ ...noteEnCoursModification, coefficient: Number(e.target.value) })}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group" style={{ flex: 1 }}>
+                      <label>Trimestre</label>
+                      <select
+                        value={noteEnCoursModification.trimestre}
+                        onChange={(e) => setNoteEnCoursModification({ ...noteEnCoursModification, trimestre: e.target.value })}
+                      >
+                        <option value="Trimestre 1">Trimestre 1</option>
+                        <option value="Trimestre 2">Trimestre 2</option>
+                        <option value="Trimestre 3">Trimestre 3</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <button type="submit" className="btn-enregistrer">Valider la modification</button>
+                    <button type="button" onClick={() => setNoteEnCoursModification(null)} style={{ background: '#ccc', border: 'none', padding: '8px 15px', cursor: 'pointer', borderRadius: '4px' }}>Annuler</button>
+                  </div>
+                </form>
+              )}
 
               {notes.length === 0 ? (
 
@@ -582,7 +707,6 @@ export default function AdminNotes() {
                   <table>
 
                     <thead>
-
                       <tr>
                         <th>Élève</th>
                         <th>Classe</th>
@@ -590,8 +714,8 @@ export default function AdminNotes() {
                         <th>Note</th>
                         <th>Coeff.</th>
                         <th>Trimestre</th>
+                        <th>Actions</th>
                       </tr>
-
                     </thead>
 
                     <tbody>
@@ -629,6 +753,23 @@ export default function AdminNotes() {
                             {item.trimestre}
                           </td>
 
+                          <td style={{ display: 'flex', gap: '5px' }}>
+                            <button
+                              type="button"
+                              onClick={() => setNoteEnCoursModification(item)}
+                              style={{ background: '#3498db', color: 'white', border: 'none', padding: '5px 10px', cursor: 'pointer', borderRadius: '4px' }}
+                            >
+                              Modifier
+                            </button>
+                            <button
+                              type="button"
+                              className="btn-supprimer"
+                              onClick={() => supprimerNote(item.id)}
+                            >
+                              Supprimer
+                            </button>
+                          </td>
+
                         </tr>
 
                       ))}
@@ -642,12 +783,10 @@ export default function AdminNotes() {
               )}
 
             </section>
-
           </>
         )}
 
       </main>
-
     </div>
   );
 }
